@@ -285,21 +285,21 @@
       <div id="hudBodyContent" class="space-y-2">
         <!-- Action Control Buttons -->
         <div class="grid grid-cols-2 gap-1.5">
-          <button id="btnTriggerAttack" class="col-span-2 bg-gradient-to-r from-rose-700 to-red-600 hover:from-rose-600 hover:to-red-500 text-white font-bold py-1.5 px-2 rounded text-[11px] shadow transition flex items-center justify-center gap-1 border border-rose-400/50">
+          <button id="btnTriggerAttack" class="col-span-2 cursor-pointer active:scale-95 select-none bg-gradient-to-r from-rose-700 to-red-600 hover:from-rose-600 hover:to-red-500 hover:brightness-110 text-white font-bold py-2 px-2.5 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1.5 border border-rose-400/50">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             1. Disparar Ataque DDoS (9.8G)
           </button>
 
-          <button id="btnTriggerMitigation" class="col-span-2 bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-slate-950 font-black py-1.5 px-2 rounded text-[11px] shadow transition flex items-center justify-center gap-1 border border-cyan-300">
+          <button id="btnTriggerMitigation" class="col-span-2 cursor-pointer active:scale-95 select-none bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 hover:brightness-110 text-slate-950 font-black py-2 px-2.5 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1.5 border border-cyan-300">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
             2. Ativar Auto-Remediação SOAR
           </button>
 
-          <button id="btnAutoDemoMode" class="bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-bold py-1.5 px-2 rounded text-[10px] shadow transition flex items-center justify-center gap-1 border border-indigo-400/50">
+          <button id="btnAutoDemoMode" class="cursor-pointer active:scale-95 select-none bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 hover:brightness-110 text-white font-bold py-2 px-2 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1 border border-indigo-400/50">
             🎬 Auto LinkedIn
           </button>
 
-          <button id="btnResetSimulation" class="bg-[#122237] hover:bg-[#1a3353] border border-[#1d3d63] text-slate-300 font-semibold py-1.5 px-2 rounded text-[10px] transition flex items-center justify-center gap-1">
+          <button id="btnResetSimulation" class="cursor-pointer active:scale-95 select-none bg-[#122237] hover:bg-[#1f3f66] hover:brightness-110 border border-[#234b7a] text-slate-200 font-bold py-2 px-2 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1">
             🔄 Resetar
           </button>
         </div>
@@ -1573,10 +1573,29 @@
       'EMEF Dom Tarcísio'
     ];
 
+    let activeSimulationTimers = [];
+
+    function clearAllSimulationTimers() {
+      activeSimulationTimers.forEach(t => clearTimeout(t));
+      activeSimulationTimers = [];
+    }
+
+    function addSimulationTimer(fn, delay) {
+      const t = setTimeout(fn, delay);
+      activeSimulationTimers.push(t);
+      return t;
+    }
+
+    function restoreButtonLabels() {
+      const btn = document.getElementById('btnAutoDemoMode');
+      if (btn) btn.innerHTML = '🎬 Auto LinkedIn';
+    }
+
     function triggerCyberAttack() {
-      if (isAttackActive && !isMitigating) return;
+      clearAllSimulationTimers();
       isAttackActive = true;
       isMitigating = false;
+      restoreButtonLabels();
 
       SoundFX.playAlert();
 
@@ -1587,7 +1606,7 @@
       
       // Update link labels in DOM to show extreme stress
       const link1Card = document.getElementById('link1Rx').closest('.bg-\\[\\#0b1626\\]');
-      link1Card.classList.add('border-rose-500', 'bg-rose-950/20');
+      if (link1Card) link1Card.classList.add('border-rose-500', 'bg-rose-950/20');
 
       // 2. Drop 6 target schools in UPA Norte to Offline
       schools.forEach(s => {
@@ -1605,8 +1624,10 @@
 
       // 3. Update HUD & Statuses
       const hudBadge = document.getElementById('hudBadgeStatus');
-      hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-500 animate-pulse';
-      hudBadge.textContent = '🚨 EM ATAQUE: DDoS 9.8 Gbps';
+      if (hudBadge) {
+        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-500 animate-pulse';
+        hudBadge.textContent = '🚨 EM ATAQUE: DDoS 9.8 Gbps';
+      }
 
       document.getElementById('incidentTargetInfo').innerHTML = '<span class="text-rose-400 font-bold">WAN02-RIMA & UPA NORTE</span>';
       document.getElementById('incidentTargetSub').textContent = 'Vetor: TCP SYN Flood massivo originado de 14.800 IPs';
@@ -1623,40 +1644,42 @@
     }
 
     function triggerSoarMitigation() {
-      if (!isAttackActive || isMitigating) return;
+      clearAllSimulationTimers();
       isMitigating = true;
+      restoreButtonLabels();
 
       const hudBadge = document.getElementById('hudBadgeStatus');
-      hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500 animate-pulse';
-      hudBadge.textContent = '🤖 SOAR: PLAYBOOK EM EXECUÇÃO';
+      if (hudBadge) {
+        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500 animate-pulse';
+        hudBadge.textContent = '🤖 SOAR: PLAYBOOK EM EXECUÇÃO';
+      }
 
       appendSocLog('INICIANDO PLAYBOOK SOAR AUTOMATIZADO: Defesa Cibernética & Restabelecimento de VPN', 'action');
 
       // Step 1: SYN Cookies & IPS Hardware Drop
-      setTimeout(() => {
+      addSimulationTimer(() => {
         appendSocLog('[1/4] Ativação de SYN Cookies via acelerador Fortinet CP9: Bloqueando 4.2M PPS de tráfego sujo', 'action');
       }, 700);
 
       // Step 2: BGP Flowspec Scrubbing
-      setTimeout(() => {
+      addSimulationTimer(() => {
         appendSocLog('[2/4] Rota BGP Flowspec injetada no RTR-PE-CABPI-01: Desvio de tráfego volumétrico para o Scrubbing Center', 'action');
       }, 1500);
 
       // Step 3: Redundant Link Failover
-      setTimeout(() => {
+      addSimulationTimer(() => {
         appendSocLog('[3/4] Redirecionamento dinâmico de tráfego crítico das escolas para o LINK 2: WAN01-BKT', 'action');
         document.getElementById('link2Rx').textContent = '420.5';
         document.getElementById('link2Tx').textContent = '190.2';
       }, 2300);
 
       // Step 4: IPsec Rekeying & Restoration
-      setTimeout(() => {
+      addSimulationTimer(() => {
         appendSocLog('[4/4] Forçando re-keying acelerado IKEv2 Phase 2 em todos os 6 firewalls FortiGate CPE...', 'action');
         
-        // Recover schools one by one for visual effect
         let delay = 0;
-        TARGET_ATTACKED_SCHOOLS.forEach((name, idx) => {
-          setTimeout(() => {
+        TARGET_ATTACKED_SCHOOLS.forEach((name) => {
+          addSimulationTimer(() => {
             const sc = schools.find(item => item.name === name);
             if (sc) {
               sc.status = 'online';
@@ -1670,13 +1693,12 @@
       }, 3100);
 
       // Step 5: Complete Neutralization
-      setTimeout(() => {
+      addSimulationTimer(() => {
         isAttackActive = false;
         isMitigating = false;
 
         SoundFX.playMitigated();
 
-        // Restore normal link telemetry
         document.getElementById('link1Rx').textContent = '880.8';
         document.getElementById('link1Tx').textContent = '374.0';
         document.getElementById('link2Rx').textContent = '65.3';
@@ -1684,13 +1706,15 @@
         document.getElementById('kpiCoreTraffic').textContent = '1040.4';
 
         const link1Card = document.getElementById('link1Rx').closest('.bg-\\[\\#0b1626\\]');
-        link1Card.classList.remove('border-rose-500', 'bg-rose-950/20');
+        if (link1Card) link1Card.classList.remove('border-rose-500', 'bg-rose-950/20');
 
         updateOverallMetrics();
         focusRegion('core');
 
-        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
-        hudBadge.textContent = '🛡️ RESOLVIDO: 100% ONLINE';
+        if (hudBadge) {
+          hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
+          hudBadge.textContent = '🛡️ RESOLVIDO: 100% ONLINE';
+        }
 
         document.getElementById('incidentTargetInfo').innerHTML = '<span class="text-emerald-400 font-bold">Ataque Neutralizado</span>';
         document.getElementById('incidentTargetSub').textContent = 'Tráfego legítimo normalizado em 100% das 94 unidades';
@@ -1705,34 +1729,45 @@
     }
 
     function runFullAutoDemo() {
-      if (autoDemoTimeout) clearTimeout(autoDemoTimeout);
+      clearAllSimulationTimers();
       const btn = document.getElementById('btnAutoDemoMode');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '⏳ Gravando (Ataque em 2s)...';
 
-      // 1. Reset first to guarantee clean slate
-      resetSimulation();
+      // 1. Reset first to clean state
+      resetSimulation(false);
 
-      // 2. Trigger Attack
-      setTimeout(() => {
+      if (btn) btn.innerHTML = '⏳ Ataque em 2s...';
+
+      addSimulationTimer(() => {
+        if (btn) btn.innerHTML = '⏳ Ataque em 1s...';
+      }, 1000);
+
+      addSimulationTimer(() => {
         triggerCyberAttack();
-        btn.innerHTML = '⏳ Ataque Ativo! (Mitigando em 4s)...';
+        if (btn) btn.innerHTML = '⏳ Mitigando em 4s...';
 
-        // 3. Trigger Mitigation automatically after 4.5 seconds (gives narrator time to explain)
-        autoDemoTimeout = setTimeout(() => {
-          btn.innerHTML = '🛡️ Mitigando ao vivo...';
+        addSimulationTimer(() => {
+          if (btn) btn.innerHTML = '⏳ Mitigando em 2s...';
+        }, 2000);
+
+        addSimulationTimer(() => {
+          if (btn) btn.innerHTML = '🛡️ Mitigando ao vivo...';
           triggerSoarMitigation();
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-          }, 5000);
-        }, 4500);
-      }, 1500);
+
+          addSimulationTimer(() => {
+            restoreButtonLabels();
+          }, 5200);
+        }, 4000);
+      }, 2000);
     }
 
-    function resetSimulation() {
-      if (autoDemoTimeout) clearTimeout(autoDemoTimeout);
+    function resetSimulation(resetButtonLabel = true) {
+      clearAllSimulationTimers();
       isAttackActive = false;
       isMitigating = false;
+
+      if (resetButtonLabel) {
+        restoreButtonLabels();
+      }
 
       schools.forEach(s => {
         s.status = 'online';
@@ -1747,16 +1782,18 @@
       document.getElementById('kpiCoreTraffic').textContent = '1040.4';
 
       const link1Card = document.getElementById('link1Rx').closest('.bg-\\[\\#0b1626\\]');
-      link1Card.classList.remove('border-rose-500', 'bg-rose-950/20');
+      if (link1Card) link1Card.classList.remove('border-rose-500', 'bg-rose-950/20');
 
       updateOverallMetrics();
       focusRegion('core');
 
       const hudBadge = document.getElementById('hudBadgeStatus');
-      hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
-      hudBadge.textContent = 'SISTEMA NORMAL';
+      if (hudBadge) {
+        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
+        hudBadge.textContent = 'SISTEMA NORMAL';
+      }
 
-      document.getElementById('incidentTargetInfo').textContent = 'Nenhum ataque ativo';
+      document.getElementById('incidentTargetInfo').textContent = 'Nenhum';
       document.getElementById('incidentTargetSub').textContent = 'Malha metropolitana operando em 100%';
       document.getElementById('soarResponseTime').textContent = '0.0s';
       document.getElementById('soarEfficacy').textContent = '100%';
