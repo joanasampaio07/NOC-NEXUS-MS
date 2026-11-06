@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Zabbix Realtime Collector & Bridge Daemon para o Dashboard NOC CAB/PI (Cabeceiras do Piauí).
+Zabbix Realtime Collector & Bridge Daemon para o Dashboard NOC NEXUS-M&S (NEXUS-M&S).
 Coleta status de túneis IPsec FortiGate, latência ICMP, perda e tráfego de interface
 diretamente via API JSON-RPC do Zabbix (6.x / 7.x) e serve para o painel web.
 """
@@ -15,10 +15,10 @@ import urllib.error
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-ZABBIX_URL = os.getenv("ZABBIX_URL", "https://zabbix.cabeceiras.pi.gov.br/api_jsonrpc.php")
+ZABBIX_URL = os.getenv("ZABBIX_URL", "https://zabbix.nexus-ms.local/api_jsonrpc.php")
 ZABBIX_API_TOKEN = os.getenv("ZABBIX_API_TOKEN", "your_zabbix_api_token_here")
-HOSTGROUP_ESCOLAS = os.getenv("HOSTGROUP_ESCOLAS", "CAB/PI / ESCOLAS")
-HOSTGROUP_CORE = os.getenv("HOSTGROUP_CORE", "CAB/PI / CORE")
+HOSTGROUP_ESCOLAS = os.getenv("HOSTGROUP_ESCOLAS", "NEXUS-MS / UNIDADES")
+HOSTGROUP_CORE = os.getenv("HOSTGROUP_CORE", "NEXUS-MS / CORE")
 
 def zabbix_api_call(method: str, params: Dict[str, Any], auth_token: str = None) -> Any:
     """Executa chamada JSON-RPC para a API do Zabbix."""
@@ -72,7 +72,7 @@ def fetch_operational_status() -> Dict[str, Any]:
     }
 
 if __name__ == "__main__":
-    logging.info("Iniciando Zabbix Collector NOC CAB/PI (Cabeceiras do Piauí)...")
+    logging.info("Iniciando Zabbix Collector NOC NEXUS-M&S (NEXUS-M&S)...")
     status = fetch_operational_status()
     print(json.dumps(status, indent=2))
 

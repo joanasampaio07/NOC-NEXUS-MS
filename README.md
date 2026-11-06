@@ -1,6 +1,6 @@
-# 🚀 Dashboard Operacional NOC CAB/PI: Monitoramento em Tempo Real da Rede (Prefeitura de Cabeceiras do Piauí)
+# 🚀 Dashboard Operacional NOC NEXUS-M&S: Monitoramento em Tempo Real da Rede (NEXUS-M&S Operations)
 
-Sistema de monitoramento centralizado desenvolvido com auxílio do **Antigravity**, projetado para monitorar a topologia e a telemetria em tempo real das **94 unidades escolares e administrativas** interligadas ao Core do **NOC CAB/PI** através de túneis IPsec Fortinet sobre a malha metropolitana, além dos links redundantes de alta capacidade da sede.
+Sistema de monitoramento centralizado desenvolvido com auxílio do **Antigravity**, projetado para monitorar a topologia e a telemetria em tempo real das **94 unidades escolares e administrativas** interligadas ao Core do **NOC NEXUS-M&S** através de túneis IPsec Fortinet sobre a malha metropolitana, além dos links redundantes de alta capacidade da sede.
 
 ---
 
@@ -22,7 +22,7 @@ Sistema de monitoramento centralizado desenvolvido com auxílio do **Antigravity
      - **SMTT** (11 unidades)
      - **SEPLOG** (19 unidades)
      - **UPA SUL** (50 unidades)
-   - Visualização do nó central **CORE SEMED (SEDE BDR)** com os ativos de borda: `SW-L3-COR-SEMED`, `RTR-PE-SEMED-01`, `Rede GPON (569 Mbps)` e redundâncias `BK Rota 1/2`.
+   - Visualização do nó central **CORE NEXUS (SEDE BDR)** com os ativos de borda: `SW-L3-COR-NEXUS`, `RTR-PE-NEXUS-01`, `Rede GPON (569 Mbps)` e redundâncias `BK Rota 1/2`.
    - Animação de fluxo de dados nas linhas e pulso de saturação nos anéis de cada concentrador.
 
 2. **Telemetria dos Links de Borda:**
@@ -57,9 +57,12 @@ Você pode abrir o arquivo `index.html` diretamente em qualquer navegador modern
 # Opção 1: Abrir diretamente no navegador
 start index.html
 
-# Opção 2: Servir via servidor HTTP local (Python)
-python -m http.server 8080
-# Acesse no navegador: http://localhost:8080
+# Opção 2: Servir via servidor HTTP local (Porta 80 HTTP Padrão)
+python -m http.server 80 --bind 0.0.0.0
+# Acesse no navegador: http://localhost ou pelo IP local http://192.168.15.11
+
+# Opção 3: Executar pelo script de inicialização rápida
+iniciar_noc_localhost.bat
 ```
 
 ---

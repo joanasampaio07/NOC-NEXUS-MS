@@ -14,7 +14,7 @@
       }
     ]
   },
-  "description": "Dashboard Operacional NOC CAB/PI (Cabeceiras do Piauí) - Monitoramento em Tempo Real integrado com Zabbix 6.x/7.x e Fortinet IPsec",
+  "description": "Dashboard Operacional NOC NEXUS-M&S (NEXUS-M&S) - Monitoramento em Tempo Real integrado com Zabbix 6.x/7.x e Fortinet IPsec",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -31,7 +31,7 @@
         "y": 0
       },
       "id": 100,
-      "title": "INDICADORES CRÍTICOS DE REDE & LINKS DE BORDA (NOC CAB/PI)",
+      "title": "INDICADORES CRÍTICOS DE REDE & LINKS DE BORDA (NOC NEXUS-M&S)",
       "type": "row"
     },
     {
@@ -101,7 +101,7 @@
             "uid": "zabbix"
           },
           "group": {
-            "filter": "CAB/PI / ESCOLAS"
+            "filter": "NEXUS-MS / UNIDADES"
           },
           "host": {
             "filter": "/.*/"
@@ -182,7 +182,7 @@
             "uid": "zabbix"
           },
           "group": {
-            "filter": "CAB/PI / ESCOLAS"
+            "filter": "NEXUS-MS / UNIDADES"
           },
           "host": {
             "filter": "/.*/"
@@ -241,10 +241,10 @@
       "targets": [
         {
           "group": {
-            "filter": "CAB/PI / CORE"
+            "filter": "NEXUS-MS / CORE"
           },
           "host": {
-            "filter": "RTR-PE-CABPI-01"
+            "filter": "RTR-PE-NEXUS-01"
           },
           "item": {
             "filter": "net.if.in[ifHCInOctets.WAN02-RIMA]"
@@ -253,10 +253,10 @@
         },
         {
           "group": {
-            "filter": "CAB/PI / CORE"
+            "filter": "NEXUS-MS / CORE"
           },
           "host": {
-            "filter": "RTR-PE-CABPI-01"
+            "filter": "RTR-PE-NEXUS-01"
           },
           "item": {
             "filter": "net.if.out[ifHCOutOctets.WAN02-RIMA]"
@@ -295,10 +295,10 @@
       "targets": [
         {
           "group": {
-            "filter": "CAB/PI / CORE"
+            "filter": "NEXUS-MS / CORE"
           },
           "host": {
-            "filter": "RTR-PE-CABPI-01"
+            "filter": "RTR-PE-NEXUS-01"
           },
           "item": {
             "filter": "net.if.in[ifHCInOctets.WAN01-BKT]"
@@ -307,10 +307,10 @@
         },
         {
           "group": {
-            "filter": "CAB/PI / CORE"
+            "filter": "NEXUS-MS / CORE"
           },
           "host": {
-            "filter": "RTR-PE-CABPI-01"
+            "filter": "RTR-PE-NEXUS-01"
           },
           "item": {
             "filter": "net.if.out[ifHCOutOctets.WAN01-BKT]"
@@ -372,10 +372,10 @@
       "targets": [
         {
           "group": {
-            "filter": "CAB/PI / CORE"
+            "filter": "NEXUS-MS / CORE"
           },
           "host": {
-            "filter": "SW-L3-COR-CABPI"
+            "filter": "SW-L3-COR-NEXUS"
           },
           "item": {
             "filter": "net.if.in[ifHCInOctets.Aggregate-WAN]"
@@ -410,10 +410,10 @@
         "y": 6
       },
       "id": 6,
-      "title": "Topologia Radial: Core CAB/PI • Concentradores (UPA Norte, Sul, SEPLOG, SMTT) & 94 Escolas",
+      "title": "Topologia Radial: Core NEXUS-M&S • Concentradores (UPA Norte, Sul, SEPLOG, SMTT) & 94 Escolas",
       "type": "volkovlabs-echarts-panel",
       "options": {
-        "getOption": "// Código Apache ECharts Radial Tree integrado ao Zabbix\nconst data = {\n  name: 'CORE CAB/PI\\nSEDE BDR',\n  itemStyle: { color: '#00e6ff' },\n  children: [\n    {\n      name: 'UPA NORTE (14/14)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Orlando Santos' }, { name: 'Horácio Fontes' }, { name: 'Vicente Olívio' },\n        { name: 'Elaine Avelino' }, { name: 'CAIC' }, { name: 'Maria da Glória' },\n        { name: 'Dom Tarcísio' }, { name: 'Sta Rita' }, { name: 'José Conrado' },\n        { name: 'Augusto Severino' }, { name: 'Mirocles Ramos' }, { name: 'Mons. Aniceto' },\n        { name: 'Prof. Zuleida' }, { name: 'Maria Silveira' }\n      ]\n    },\n    {\n      name: 'SMTT (11/11)',\n      itemStyle: { color: '#00e6ff' },\n      children: [\n        { name: 'Nunes Mendonça' }, { name: 'Aloísio Marques' }, { name: 'Pres. JK' },\n        { name: 'Benjamim Alves' }, { name: 'CCFT/ICA' }, { name: 'José Airton' },\n        { name: 'José Resende' }, { name: 'Min. Mário' }, { name: 'Alm. Tamandaré' },\n        { name: 'Prof. João Oliveira' }, { name: 'Almerinda Neri' }\n      ]\n    },\n    {\n      name: 'SEPLOG (19/19)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Manoel Bonfim' }, { name: 'Tancredo Neves' }, { name: 'Quintina Diniz' },\n        { name: 'Letícia Loli' }, { name: 'Thétis Nunes' }, { name: 'Ágape' },\n        { name: 'Sta Rita' }, { name: 'Dr. Fernando Bua' }, { name: 'Costa Melo' },\n        { name: 'João Teles' }, { name: 'Carvalho Neto' }, { name: 'Ana Luiza Mesquita' }\n      ]\n    },\n    {\n      name: 'UPA SUL (50/50)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Rachel Cortes' }, { name: 'Carvalho Neto' }, { name: 'Papa João Paulo' },\n        { name: 'Dom José' }, { name: 'Valter Cardoso' }, { name: 'Laonte Gama' },\n        { name: 'Arício Fortes' }, { name: 'José Carlos' }, { name: 'Arthur Bispo' },\n        { name: 'Ângelo Mota' }, { name: 'Minervina Marçal' }, { name: 'Janira Ferraz' }\n      ]\n    }\n  ]\n};\n\nreturn {\n  tooltip: { trigger: 'item', triggerOn: 'mousemove' },\n  series: [\n    {\n      type: 'tree',\n      data: [data],\n      layout: 'radial',\n      symbol: 'circle',\n      symbolSize: 12,\n      initialTreeDepth: 2,\n      animationDurationUpdate: 750,\n      emphasis: { focus: 'descendant' }\n    }\n  ]\n};"
+        "getOption": "// Código Apache ECharts Radial Tree integrado ao Zabbix\nconst data = {\n  name: 'CORE NEXUS-M&S\\nSEDE BDR',\n  itemStyle: { color: '#00e6ff' },\n  children: [\n    {\n      name: 'UPA NORTE (14/14)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Orlando Santos' }, { name: 'Horácio Fontes' }, { name: 'Vicente Olívio' },\n        { name: 'Elaine Avelino' }, { name: 'CAIC' }, { name: 'Maria da Glória' },\n        { name: 'Dom Tarcísio' }, { name: 'Sta Rita' }, { name: 'José Conrado' },\n        { name: 'Augusto Severino' }, { name: 'Mirocles Ramos' }, { name: 'Mons. Aniceto' },\n        { name: 'Prof. Zuleida' }, { name: 'Maria Silveira' }\n      ]\n    },\n    {\n      name: 'SMTT (11/11)',\n      itemStyle: { color: '#00e6ff' },\n      children: [\n        { name: 'Nunes Mendonça' }, { name: 'Aloísio Marques' }, { name: 'Pres. JK' },\n        { name: 'Benjamim Alves' }, { name: 'CCFT/ICA' }, { name: 'José Airton' },\n        { name: 'José Resende' }, { name: 'Min. Mário' }, { name: 'Alm. Tamandaré' },\n        { name: 'Prof. João Oliveira' }, { name: 'Almerinda Neri' }\n      ]\n    },\n    {\n      name: 'SEPLOG (19/19)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Manoel Bonfim' }, { name: 'Tancredo Neves' }, { name: 'Quintina Diniz' },\n        { name: 'Letícia Loli' }, { name: 'Thétis Nunes' }, { name: 'Ágape' },\n        { name: 'Sta Rita' }, { name: 'Dr. Fernando Bua' }, { name: 'Costa Melo' },\n        { name: 'João Teles' }, { name: 'Carvalho Neto' }, { name: 'Ana Luiza Mesquita' }\n      ]\n    },\n    {\n      name: 'UPA SUL (50/50)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Rachel Cortes' }, { name: 'Carvalho Neto' }, { name: 'Papa João Paulo' },\n        { name: 'Dom José' }, { name: 'Valter Cardoso' }, { name: 'Laonte Gama' },\n        { name: 'Arício Fortes' }, { name: 'José Carlos' }, { name: 'Arthur Bispo' },\n        { name: 'Ângelo Mota' }, { name: 'Minervina Marçal' }, { name: 'Janira Ferraz' }\n      ]\n    }\n  ]\n};\n\nreturn {\n  tooltip: { trigger: 'item', triggerOn: 'mousemove' },\n  series: [\n    {\n      type: 'tree',\n      data: [data],\n      layout: 'radial',\n      symbol: 'circle',\n      symbolSize: 12,\n      initialTreeDepth: 2,\n      animationDurationUpdate: 750,\n      emphasis: { focus: 'descendant' }\n    }\n  ]\n};"
       }
     },
     {
@@ -475,8 +475,8 @@
   "style": "dark",
   "tags": [
     "NOC",
-    "CABPI",
-    "Cabeceiras",
+    "NEXUS",
+    "NEXUS-M&S",
     "Zabbix",
     "Fortinet",
     "IPsec",
@@ -499,7 +499,7 @@
         "multi": false,
         "name": "concentrador",
         "options": [],
-        "query": "CAB/PI / ESCOLAS",
+        "query": "NEXUS-MS / UNIDADES",
         "refresh": 1,
         "type": "query"
       }
@@ -519,8 +519,8 @@
     ]
   },
   "timezone": "America/Fortaleza",
-  "title": "NOC CAB/PI - Topologia & Telemetria em Tempo Real (Cabeceiras do Piauí)",
-  "uid": "cabpi-noc-live",
+  "title": "NOC NEXUS-M&S - Topologia & Telemetria em Tempo Real (NEXUS-M&S)",
+  "uid": "nexus-noc-live",
   "version": 1
 }
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NOC CAB/PI - Monitoramento em Tempo Real - Prefeitura de Cabeceiras do Piauí</title>
+  <title>NOC NEXUS-M&S - Monitoramento em Tempo Real - NEXUS-M&S Operations</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -113,17 +113,17 @@
   <header class="bg-[#091320] border-b border-[#14283f] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-md">
     <div class="flex items-center space-x-3">
       <div class="relative flex items-center justify-center px-2 h-8 rounded-lg bg-cyan-950 border border-cyan-500/40 text-cyan-400 font-bold text-xs tracking-wider shadow-inner">
-        NOC CAB/PI
+        NOC NEXUS-M&S
         <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
         <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full"></span>
       </div>
       <div>
         <div class="text-[12px] font-bold tracking-wider text-cyan-400 uppercase flex items-center gap-1.5">
-          <span>PREFEITURA DE CABECEIRAS DO PIAUÍ</span>
+          <span>NEXUS-M&S // ENTERPRISE OPERATIONS</span>
           <span class="text-slate-500">/</span>
-          <span>NOC CAB/PI</span>
+          <span>NOC NEXUS-M&S</span>
           <span class="text-slate-500">/</span>
-          <span class="text-white">SEMED</span>
+          <span class="text-white">NEXUS</span>
         </div>
         <div class="text-[12px] font-medium text-slate-300 flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -290,7 +290,7 @@
           </div>
           <div>
             <h2 class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>WAR ROOM • SOC CAB/PI</span>
+              <span>WAR ROOM • SOC NEXUS-M&S</span>
             </h2>
             <span id="hudBadgeStatus" class="inline-block text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50">NORMAL</span>
           </div>
@@ -373,7 +373,7 @@
           <details class="text-[10px]">
             <summary class="cursor-pointer text-cyan-400 hover:underline">🎙️ Roteiro</summary>
             <div class="absolute left-0 right-0 mt-1 p-2 bg-[#050b14] border border-cyan-800 rounded text-slate-300 text-[10px] z-40 leading-normal">
-              1. Fale sobre as 94 escolas de Cabeceiras.<br>
+              1. Fale sobre as 94 escolas de NEXUS-M&S.<br>
               2. Dispare o ataque DDoS (9.8G) e mostre a UPA Norte caindo.<br>
               3. Mostre o SOAR mitigando automaticamente em 14s!
             </div>
@@ -614,7 +614,7 @@
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-400 mb-1">Zabbix API Endpoint URL</label>
-          <input id="zabbixUrlInput" type="text" value="https://zabbix.cabeceiras.pi.gov.br/api_jsonrpc.php" class="w-full bg-[#070f1a] border border-[#1b3658] rounded px-3 py-1.5 font-mono text-cyan-300 focus:outline-none focus:border-cyan-400" />
+          <input id="zabbixUrlInput" type="text" value="https://zabbix.nexus-ms.local/api_jsonrpc.php" class="w-full bg-[#070f1a] border border-[#1b3658] rounded px-3 py-1.5 font-mono text-cyan-300 focus:outline-none focus:border-cyan-400" />
         </div>
         <div>
           <label class="block text-slate-400 mb-1">API Token (ou Bearer Token Zabbix 7.0)</label>
@@ -623,11 +623,11 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-slate-400 mb-1">Hostgroup Escolas</label>
-            <input id="zabbixHostgroup" type="text" value="CAB/PI / ESCOLAS" class="w-full bg-[#070f1a] border border-[#1b3658] rounded px-3 py-1.5 font-mono text-slate-200 focus:outline-none" />
+            <input id="zabbixHostgroup" type="text" value="NEXUS-MS / UNIDADES" class="w-full bg-[#070f1a] border border-[#1b3658] rounded px-3 py-1.5 font-mono text-slate-200 focus:outline-none" />
           </div>
           <div>
             <label class="block text-slate-400 mb-1">Hostgroup Core & Concentradores</label>
-            <input id="zabbixHostgroupCore" type="text" value="CAB/PI / INFRA_CORE" class="w-full bg-[#070f1a] border border-[#1b3658] rounded px-3 py-1.5 font-mono text-slate-200 focus:outline-none" />
+            <input id="zabbixHostgroupCore" type="text" value="NEXUS-MS / INFRA_CORE" class="w-full bg-[#070f1a] border border-[#1b3658] rounded px-3 py-1.5 font-mono text-slate-200 focus:outline-none" />
           </div>
         </div>
 
@@ -676,8 +676,8 @@
       <!-- Official Document Header -->
       <div class="text-center border-b-2 border-slate-800 pb-4">
         <div class="text-[12px] font-bold text-slate-500 tracking-widest uppercase">ESTADO DO PIAUÍ • PODER EXECUTIVO</div>
-        <h1 class="text-lg md:text-xl font-black text-slate-900 uppercase tracking-tight mt-0.5">PREFEITURA MUNICIPAL DE CABECEIRAS DO PIAUÍ</h1>
-        <div class="text-xs font-semibold text-slate-700 mt-0.5">SECRETARIA MUNICIPAL DE EDUCAÇÃO (SEMED) • DIVISÃO DE TI (DTI / NOC / SOC)</div>
+        <h1 class="text-lg md:text-xl font-black text-slate-900 uppercase tracking-tight mt-0.5">NEXUS-M&S // CENTRO DE OPERAÇÕES DE REDE & SOC</h1>
+        <div class="text-xs font-semibold text-slate-700 mt-0.5">SECRETARIA MUNICIPAL DE EDUCAÇÃO (NEXUS) • DIVISÃO DE TI (DTI / NOC / SOC)</div>
         <div class="inline-block mt-2 px-3 py-0.5 rounded bg-slate-900 text-cyan-300 font-mono text-[11px] font-bold tracking-wider uppercase">
           RELATÓRIO TÉCNICO EXECUTIVO DE RESPOSTA A INCIDENTE CIBERNÉTICO & MITIGAÇÃO AUTOMATIZADA SOAR
         </div>
@@ -687,7 +687,7 @@
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs">
         <div>
           <span class="text-slate-500 block text-[10px] font-bold uppercase">Nº DO PROTOCOLO / TICKET</span>
-          <span id="repTicketId" class="font-mono font-bold text-slate-900 text-sm">INC-2026-CABPI-9842</span>
+          <span id="repTicketId" class="font-mono font-bold text-slate-900 text-sm">INC-2026-NEXUS-9842</span>
         </div>
         <div>
           <span class="text-slate-500 block text-[10px] font-bold uppercase">CLASSIFICAÇÃO DE RISCO</span>
@@ -767,14 +767,14 @@
       <!-- Conclusion & Signatures -->
       <div class="pt-3 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
         <div class="text-[10px] text-slate-500 leading-normal max-w-md">
-          <strong>PARECER CONCLUSIVO:</strong> A infraestrutura de segurança cibernética e monitoramento da SEMED / CABPI demonstrou conformidade com as melhores práticas de resiliência e resposta a incidentes (NIST / CIS Controls).
+          <strong>PARECER CONCLUSIVO:</strong> A infraestrutura de segurança cibernética e monitoramento da NEXUS / NEXUS demonstrou conformidade com as melhores práticas de resiliência e resposta a incidentes (NIST / CIS Controls).
         </div>
         <div class="text-center min-w-[240px]">
           <div class="border-b border-slate-400 pb-1 text-[11px] font-bold text-slate-800">
             DIVISÃO DE TECNOLOGIA DA INFORMAÇÃO
           </div>
           <div class="text-[9px] text-slate-500 uppercase mt-0.5">
-            NOC / SOC MUNICIPAL • CABECEIRAS DO PIAUÍ
+            NOC / SOC MUNICIPAL • NEXUS-M&S
           </div>
         </div>
       </div>
@@ -796,13 +796,13 @@
 
     // Core infrastructure devices
     const CORE_DEVICES = [
-      { id: 'sw_cor', name: 'SW-L3-COR-CABPI', role: 'Switch Core L3', ip: '10.0.0.1', xOffset: -90, yOffset: -180 },
-      { id: 'rtr_pe', name: 'RTR-PE-CABPI-01', role: 'Roteador BGP / PE', ip: '10.0.0.254', xOffset: 30, yOffset: -180 },
+      { id: 'sw_cor', name: 'SW-L3-COR-NEXUS', role: 'Switch Core L3', ip: '10.0.0.1', xOffset: -90, yOffset: -180 },
+      { id: 'rtr_pe', name: 'RTR-PE-NEXUS-01', role: 'Roteador BGP / PE', ip: '10.0.0.254', xOffset: 30, yOffset: -180 },
       { id: 'gpon', name: 'Rede GPON', role: 'Malha Óptica Dedicada (569 Mbps)', ip: '10.254.0.1', xOffset: -160, yOffset: -80 },
       { id: 'link_bkt', name: 'LINK 2 - WAN01-BKT', role: 'Port1 Redundante BKT', ip: '187.19.20.1', xOffset: 120, yOffset: -150 }
     ];
 
-    // Real school names from SEMED Cabeceiras do Piauí network
+    // Real school names from NEXUS NEXUS-M&S network
     const SCHOOL_NAMES = {
       norte: [
         'EMEF Orlando Santos', 'EMEF Horácio Fontes', 'EMEF Vicente Olívio Brivio', 'EMEF Elaine Avelino',
@@ -921,8 +921,8 @@
       // 1. Core node at center (0, 0)
       const coreNode = {
         type: 'core',
-        id: 'core_cabpi',
-        name: 'CORE CAB/PI',
+        id: 'core_nexus',
+        name: 'CORE NEXUS-M&S',
         sub: 'SEDE BDR',
         x: 0,
         y: 0,
@@ -1141,7 +1141,7 @@
         ctx.fillText(dev.sub, dev.x, dev.y + 11);
       });
 
-      // B) Center Core SEMED Node
+      // B) Center Core NEXUS Node
       ctx.save();
       // Outer glow pulse
       ctx.beginPath();
@@ -1163,7 +1163,7 @@
       ctx.fillStyle = '#00e6ff';
       ctx.font = 'bold 12px Inter';
       ctx.textAlign = 'center';
-      ctx.fillText('CORE CAB/PI', coreNode.x, coreNode.y - 4);
+      ctx.fillText('CORE NEXUS-M&S', coreNode.x, coreNode.y - 4);
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 10px JetBrains Mono';
       ctx.fillText('SEDE BDR', coreNode.x, coreNode.y + 11);
@@ -1324,7 +1324,7 @@
           `;
         } else if (hit.type === 'concentrator') {
           metricsEl.innerHTML = `
-            <div>Concentrador Regional SEMED</div>
+            <div>Concentrador Regional NEXUS</div>
             <div>Status: <span class="text-emerald-400">${hit.onlineCount}/${hit.count} Unidades Online</span></div>
             <div>Clique para focar nesta região</div>
           `;
@@ -1761,7 +1761,7 @@
         ],
         soarSteps: [
           { text: '[1/4] Ativação de SYN Cookies via acelerador Fortinet CP9: Bloqueando 4.2M PPS de tráfego sujo', delay: 700 },
-          { text: '[2/4] Rota BGP Flowspec injetada no RTR-PE-CABPI-01: Desvio de tráfego volumétrico para o Scrubbing Center', delay: 1500 },
+          { text: '[2/4] Rota BGP Flowspec injetada no RTR-PE-NEXUS-01: Desvio de tráfego volumétrico para o Scrubbing Center', delay: 1500 },
           { text: '[3/4] Redirecionamento dinâmico de tráfego crítico das escolas para o LINK 2: WAN01-BKT', delay: 2300 },
           { text: '[4/4] Forçando re-keying acelerado IKEv2 Phase 2 em todos os 6 firewalls FortiGate CPE...', delay: 3100 }
         ],
@@ -1810,7 +1810,7 @@
       bgp_hijack: {
         id: 'bgp_hijack',
         name: 'BGP Route Hijacking / Desvio Malicioso de Tráfego',
-        targetInfo: 'RTR-PE-CABPI-01 & MALHA GPON',
+        targetInfo: 'RTR-PE-NEXUS-01 & MALHA GPON',
         targetSub: 'Vetor: Rota ilegítima forjada por AS65530 externo tentando desviar tráfego Core',
         focusRegion: 'core',
         targetSchools: ['EMEF Benjamim Alves', 'EMEF CCFT/ICA', 'EMEF Quintina Diniz', 'EMEF Letícia Loli', 'EMEF Thétis Nunes'],
@@ -1829,11 +1829,11 @@
         ],
         soarSteps: [
           { text: '[1/4] Validação RPKI (ROA) ativada: Rejeição imediata de anúncios de rota sem assinatura criptográfica', delay: 700 },
-          { text: '[2/4] Purga das tabelas FIB/RIB do RTR-PE-CABPI-01: Expurgo da rota maliciosa do AS65530', delay: 1500 },
+          { text: '[2/4] Purga das tabelas FIB/RIB do RTR-PE-NEXUS-01: Expurgo da rota maliciosa do AS65530', delay: 1500 },
           { text: '[3/4] Reancoragem BGP via peering seguro no PTT/IX.br com aplicação de BGP Community protegida', delay: 2300 },
           { text: '[4/4] Convergência de rota legítima restabelecida e latência normalizada para 1.8 ms', delay: 3100 }
         ],
-        reportSummary: 'Identificou-se um anúncio de prefixo de rede não autorizado (BGP Hijacking) na internet pública com intenção de desviar tráfego metropolitano do Core da Prefeitura. A governança do SOAR ativou validação criptográfica RPKI e descartou as rotas não autenticadas no roteador RTR-PE-CABPI-01. O tráfego foi reancorado via rota de alta confiabilidade em 14.5 segundos, frustrando integralmente a tentativa de interceptação.',
+        reportSummary: 'Identificou-se um anúncio de prefixo de rede não autorizado (BGP Hijacking) na internet pública com intenção de desviar tráfego metropolitano do Core da Prefeitura. A governança do SOAR ativou validação criptográfica RPKI e descartou as rotas não autenticadas no roteador RTR-PE-NEXUS-01. O tráfego foi reancorado via rota de alta confiabilidade em 14.5 segundos, frustrando integralmente a tentativa de interceptação.',
         timelineRows: [
           { phase: 'Detecção', time: 'T+0.4s', action: 'Telemetria de latência Zabbix aponta salto anômalo de 1.8ms para 310ms', res: 'Alerta Rota BGP' },
           { phase: 'Filtragem', time: 'T+2.0s', action: 'Validação RPKI (Route Origin Authorization) descartando rota fraudulenta', res: 'Prefixo Rejeitado' },
@@ -2030,7 +2030,7 @@
     function generateAndOpenExecutiveReport(scenario) {
       if (!scenario) scenario = ATTACK_SCENARIOS[currentScenarioKey] || ATTACK_SCENARIOS.ddos_syn;
 
-      const randomTicket = `INC-2026-CABPI-${Math.floor(1000 + Math.random() * 9000)}`;
+      const randomTicket = `INC-2026-NEXUS-${Math.floor(1000 + Math.random() * 9000)}`;
       const nowStr = new Date().toLocaleString('pt-BR');
 
       document.getElementById('repTicketId').textContent = randomTicket;
