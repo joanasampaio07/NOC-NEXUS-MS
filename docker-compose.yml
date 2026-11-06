@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # -----------------------------------------------------------
+  # BANCO DE DADOS POSTGRESQL PARA O ZABBIX
+  # -----------------------------------------------------------
+  zabbix-db:
+    image: postgres:15-alpine
+    container_name: noc-zabbix-db
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix_password
+      POSTGRES_DB: zabbix
+    volumes:
+      - zabbix-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - noc-network
+
+  # -----------------------------------------------------------
+  # ZABBIX SERVER (NÚCLEO DE MONITORAMENTO)
+  # -----------------------------------------------------------
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-7.0-latest
+    container_name: noc-zabbix-server
+    environment:
+      DB_SERVER_HOST: zabbix-db
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix_password
+      POSTGRES_DB: zabbix
+    ports:
+      - "10051:10051"
+    depends_on:
+      - zabbix-db
+    restart: unless-stopped
+    networks:
+      - noc-network
+
+  # -----------------------------------------------------------
+  # INTERFACE WEB DO ZABBIX (PAINEL WEB)
+  # -----------------------------------------------------------
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.0-latest
+    container_name: noc-zabbix-web
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+      DB_SERVER_HOST: zabbix-db
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix_password
+      POSTGRES_DB: zabbix
+      PHP_TZ: America/Fortaleza
+    ports:
+      - "8085:8080" # Acesse no navegador: http://localhost:8085 (Admin / zabbix)
+    depends_on:
+      - zabbix-server
+      - zabbix-db
+    restart: unless-stopped
+    networks:
+      - noc-network
+
+  # -----------------------------------------------------------
+  # GRAFANA COM OS PLUGINS DE TOPOLOGIA E ZABBIX PRÉ-INSTALADOS
+  # -----------------------------------------------------------
+  grafana:
+    image: grafana/grafana:latest
+    container_name: noc-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=alexanderzobnin-zabbix-app,volkovlabs-echarts-panel
+    ports:
+      - "3000:3000" # Acesse no navegador: http://localhost:3000 (admin / admin)
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - noc-network
+
+networks:
+  noc-network:
+    driver: bridge
+
+volumes:
+  zabbix-db-data:
+  grafana-storage:
