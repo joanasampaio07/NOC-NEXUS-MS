@@ -67,17 +67,23 @@ python -m http.server 8080
 ## 📊 Como Importar no Grafana
 
 ### Pré-requisitos
+
 1. Plugin do Zabbix instalado:
+
    ```bash
    grafana-cli plugins install alexanderzobnin-zabbix-app
    ```
+
 2. Plugin Apache ECharts (para renderização radial):
+
    ```bash
    grafana-cli plugins install volkovlabs-echarts-panel
    ```
+
 3. Reinicie o serviço do Grafana.
 
 ### Passo a Passo de Importação
+
 1. No menu lateral do Grafana, clique em **Dashboards** > **New** > **Import**.
 2. Faça o upload do arquivo `noc_dashboard_grafana.json` ou cole o seu conteúdo.
 3. Selecione o seu Datasource do Zabbix configurado.
@@ -95,4 +101,3 @@ python -m http.server 8080
 | **Tráfego WAN In** | `net.if.in[ifHCInOctets.{#IFNAME}]` | bps |
 | **Tráfego WAN Out** | `net.if.out[ifHCOutOctets.{#IFNAME}]` | bps |
 | **Carga de CPU CPE** | `system.cpu.util` | % |
-

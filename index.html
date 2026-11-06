@@ -81,6 +81,30 @@
     #topologyCanvas:active {
       cursor: grabbing;
     }
+
+    /* Print styles for Executive Report */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #executiveReportModal, #executiveReportModal * {
+        visibility: visible;
+      }
+      #executiveReportModal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-[#060b13] text-slate-100 min-h-screen flex flex-col antialiased select-none">
@@ -283,23 +307,41 @@
 
       <!-- Collapsible Body (can be minimized) -->
       <div id="hudBodyContent" class="space-y-2">
+        <!-- Attack Vector Selector -->
+        <div class="bg-[#050b14] p-1.5 rounded border border-[#1b3452]">
+          <label class="block text-[10px] font-mono text-cyan-400 mb-1 font-bold flex items-center justify-between">
+            <span>VETOR DE CYBER ATAQUE:</span>
+            <span class="text-[9px] text-slate-500">4 CENÁRIOS</span>
+          </label>
+          <select id="selectAttackVector" class="w-full bg-[#081322] border border-[#1e3b61] text-rose-300 font-mono text-[10px] rounded px-1.5 py-1 focus:outline-none focus:border-rose-400 cursor-pointer">
+            <option value="ddos_syn">💥 1. DDoS SYN Flood (9.8G na WAN02 & UPA Norte)</option>
+            <option value="ransomware">☣️ 2. Ransomware & Mov. Lateral (SMTT & SEPLOG)</option>
+            <option value="bgp_hijack">🌐 3. BGP Hijacking / Rota Maliciosa (Core RTR-PE)</option>
+            <option value="blackout">⚡ 4. Blackout Massivo Multi-Vetor (Core + 4 Regiões)</option>
+          </select>
+        </div>
+
         <!-- Action Control Buttons -->
         <div class="grid grid-cols-2 gap-1.5">
           <button id="btnTriggerAttack" class="col-span-2 cursor-pointer active:scale-95 select-none bg-gradient-to-r from-rose-700 to-red-600 hover:from-rose-600 hover:to-red-500 hover:brightness-110 text-white font-bold py-2 px-2.5 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1.5 border border-rose-400/50">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            1. Disparar Ataque DDoS (9.8G)
+            1. Disparar Ataque Selecionado
           </button>
 
           <button id="btnTriggerMitigation" class="col-span-2 cursor-pointer active:scale-95 select-none bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 hover:brightness-110 text-slate-950 font-black py-2 px-2.5 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1.5 border border-cyan-300">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            2. Ativar Auto-Remediação SOAR
+            2. Auto-Remediar SOAR & Gerar Relatório
           </button>
 
-          <button id="btnAutoDemoMode" class="cursor-pointer active:scale-95 select-none bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 hover:brightness-110 text-white font-bold py-2 px-2 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1 border border-indigo-400/50">
+          <button id="btnOpenReportModal" class="col-span-2 cursor-pointer active:scale-95 select-none bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 hover:brightness-110 text-slate-950 font-bold py-1.5 px-2 rounded text-[10px] shadow-md transition-all flex items-center justify-center gap-1 border border-amber-300">
+            📄 Ver Relatório Executivo (Alta Gestão)
+          </button>
+
+          <button id="btnAutoDemoMode" class="cursor-pointer active:scale-95 select-none bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 hover:brightness-110 text-white font-bold py-1.5 px-2 rounded text-[10px] shadow-md transition-all flex items-center justify-center gap-1 border border-indigo-400/50">
             🎬 Auto LinkedIn
           </button>
 
-          <button id="btnResetSimulation" class="cursor-pointer active:scale-95 select-none bg-[#122237] hover:bg-[#1f3f66] hover:brightness-110 border border-[#234b7a] text-slate-200 font-bold py-2 px-2 rounded text-[11px] shadow-md transition-all flex items-center justify-center gap-1">
+          <button id="btnResetSimulation" class="cursor-pointer active:scale-95 select-none bg-[#122237] hover:bg-[#1f3f66] hover:brightness-110 border border-[#234b7a] text-slate-200 font-bold py-1.5 px-2 rounded text-[10px] shadow-md transition-all flex items-center justify-center gap-1">
             🔄 Resetar
           </button>
         </div>
@@ -608,6 +650,135 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE POST-INCIDENT REPORT MODAL (ALTA GESTÃO / PREFEITURA) -->
+  <div id="executiveReportModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-50 overflow-y-auto p-4 md:p-6 flex items-center justify-center">
+    <div class="bg-white text-slate-900 rounded-xl shadow-2xl max-w-4xl w-full p-6 md:p-8 space-y-5 border border-slate-300 relative print:m-0 print:border-none print:shadow-none">
+      
+      <!-- Modal Top Toolbar (hidden in print) -->
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3 no-print">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-bold font-mono uppercase tracking-wider text-slate-500">Documento Oficial Auditado • SOAR Forensics</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnPrintReport" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-md text-xs shadow flex items-center gap-1.5 cursor-pointer active:scale-95 transition">
+            🖨️ Imprimir / Salvar PDF
+          </button>
+          <button id="btnCloseReportModal" class="text-slate-400 hover:text-slate-700 p-1 rounded-md text-base font-bold cursor-pointer">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Official Document Header -->
+      <div class="text-center border-b-2 border-slate-800 pb-4">
+        <div class="text-[12px] font-bold text-slate-500 tracking-widest uppercase">ESTADO DO PIAUÍ • PODER EXECUTIVO</div>
+        <h1 class="text-lg md:text-xl font-black text-slate-900 uppercase tracking-tight mt-0.5">PREFEITURA MUNICIPAL DE CABECEIRAS DO PIAUÍ</h1>
+        <div class="text-xs font-semibold text-slate-700 mt-0.5">SECRETARIA MUNICIPAL DE EDUCAÇÃO (SEMED) • DIVISÃO DE TI (DTI / NOC / SOC)</div>
+        <div class="inline-block mt-2 px-3 py-0.5 rounded bg-slate-900 text-cyan-300 font-mono text-[11px] font-bold tracking-wider uppercase">
+          RELATÓRIO TÉCNICO EXECUTIVO DE RESPOSTA A INCIDENTE CIBERNÉTICO & MITIGAÇÃO AUTOMATIZADA SOAR
+        </div>
+      </div>
+
+      <!-- Incident Meta Information Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs">
+        <div>
+          <span class="text-slate-500 block text-[10px] font-bold uppercase">Nº DO PROTOCOLO / TICKET</span>
+          <span id="repTicketId" class="font-mono font-bold text-slate-900 text-sm">INC-2026-CABPI-9842</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[10px] font-bold uppercase">CLASSIFICAÇÃO DE RISCO</span>
+          <span class="font-bold text-rose-600 text-xs flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-rose-600"></span> CRÍTICA (NÍVEL 1)
+          </span>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[10px] font-bold uppercase">DATA & HORA DO INCIDENTE</span>
+          <span id="repTimestamp" class="font-mono text-slate-800">06/11/2026 11:46:50</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[10px] font-bold uppercase">MOTOR DE DEFESA</span>
+          <span class="font-bold text-indigo-700">Fortinet FortiOS SOAR</span>
+        </div>
+      </div>
+
+      <!-- Executive Summary -->
+      <div class="space-y-2">
+        <h3 class="text-xs font-black uppercase text-slate-900 border-l-4 border-indigo-600 pl-2">
+          1. SUMÁRIO EXECUTIVO PARA A ALTA GESTÃO (PREFEITO / SECRETÁRIOS)
+        </h3>
+        <p id="repExecutiveSummary" class="text-xs text-slate-700 leading-relaxed text-justify bg-slate-50 p-3 rounded border border-slate-200">
+          Na presente data, os sistemas perimetrais de cibersegurança do NOC da Prefeitura registraram tentativa hostil de ataque direcionado à infraestrutura de redes municipal. O motor de inteligência e automação SOAR identificou o vetor anômalo em milissegundos e neutralizou o incidente de forma totalmente autônoma, preservando 100% da integridade dos dados e garantindo a continuidade ininterrupta das aulas e serviços administrativos em todas as 94 unidades escolares.
+        </p>
+      </div>
+
+      <!-- Key Governance Metrics Table (KPIs) -->
+      <div>
+        <h3 class="text-xs font-black uppercase text-slate-900 border-l-4 border-indigo-600 pl-2 mb-2">
+          2. INDICADORES DE GOVERNANÇA & IMPACTO EVITADO
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs">
+          <div class="p-2.5 rounded bg-emerald-50 border border-emerald-200">
+            <span class="text-slate-500 text-[10px] block font-bold uppercase">UNIDADES PRESERVADAS</span>
+            <span class="text-lg font-black text-emerald-700">94 / 94 (100%)</span>
+            <span class="text-[10px] text-emerald-600 block">Zero escolas paralisadas</span>
+          </div>
+          <div class="p-2.5 rounded bg-cyan-50 border border-cyan-200">
+            <span class="text-slate-500 text-[10px] block font-bold uppercase">TEMPO DE RESPOSTA (MTTR)</span>
+            <span id="repMttrTime" class="text-lg font-black text-cyan-800">14.2 seg</span>
+            <span class="text-[10px] text-cyan-600 block">Mitigação em tempo real</span>
+          </div>
+          <div class="p-2.5 rounded bg-indigo-50 border border-indigo-200">
+            <span class="text-slate-500 text-[10px] block font-bold uppercase">DANO FINANCEIRO EVITADO</span>
+            <span class="text-lg font-black text-indigo-700">R$ 185.000+</span>
+            <span class="text-[10px] text-indigo-600 block">Custo de parada estimado</span>
+          </div>
+          <div class="p-2.5 rounded bg-amber-50 border border-amber-200">
+            <span class="text-slate-500 text-[10px] block font-bold uppercase">CONFORMIDADE LGPD</span>
+            <span class="text-lg font-black text-amber-700">100% SEGURO</span>
+            <span class="text-[10px] text-amber-600 block">0 vazamentos de dados</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Remediation Timeline Table -->
+      <div>
+        <h3 class="text-xs font-black uppercase text-slate-900 border-l-4 border-indigo-600 pl-2 mb-2">
+          3. CRONOGRAMA DE AÇÃO AUTÔNOMA DO SOAR (TIMELINE DE CONTENÇÃO)
+        </h3>
+        <table class="w-full text-left text-xs border border-slate-200 rounded overflow-hidden">
+          <thead class="bg-slate-100 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200">
+            <tr>
+              <th class="p-2 w-20">Fase</th>
+              <th class="p-2 w-28">Tempo Decorrido</th>
+              <th class="p-2">Ação Técnica Executada</th>
+              <th class="p-2 w-24">Resultado</th>
+            </tr>
+          </thead>
+          <tbody id="repTimelineBody" class="divide-y divide-slate-200 font-mono text-[11px]">
+            <!-- Injected dynamically based on attack vector -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Conclusion & Signatures -->
+      <div class="pt-3 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+        <div class="text-[10px] text-slate-500 leading-normal max-w-md">
+          <strong>PARECER CONCLUSIVO:</strong> A infraestrutura de segurança cibernética e monitoramento da SEMED / CABPI demonstrou conformidade com as melhores práticas de resiliência e resposta a incidentes (NIST / CIS Controls).
+        </div>
+        <div class="text-center min-w-[240px]">
+          <div class="border-b border-slate-400 pb-1 text-[11px] font-bold text-slate-800">
+            DIVISÃO DE TECNOLOGIA DA INFORMAÇÃO
+          </div>
+          <div class="text-[9px] text-slate-500 uppercase mt-0.5">
+            NOC / SOC MUNICIPAL • CABECEIRAS DO PIAUÍ
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1564,16 +1735,152 @@
       container.scrollTop = container.scrollHeight;
     }
 
-    const TARGET_ATTACKED_SCHOOLS = [
-      'EMEF Orlando Santos',
-      'EMEF Horácio Fontes',
-      'EMEF Vicente Olívio Brivio',
-      'EMEF Elaine Avelino',
-      'EMEF CAIC',
-      'EMEF Dom Tarcísio'
-    ];
-
     let activeSimulationTimers = [];
+    let currentScenarioKey = 'ddos_syn';
+
+    const ATTACK_SCENARIOS = {
+      ddos_syn: {
+        id: 'ddos_syn',
+        name: 'Ataque DDoS Volumétrico SYN Flood (9.8 Gbps)',
+        targetInfo: 'WAN02-RIMA & UPA NORTE',
+        targetSub: 'Vetor: TCP SYN Flood massivo originado de 14.800 IPs',
+        focusRegion: 'norte',
+        targetSchools: ['EMEF Orlando Santos', 'EMEF Horácio Fontes', 'EMEF Vicente Olívio Brivio', 'EMEF Elaine Avelino', 'EMEF CAIC', 'EMEF Dom Tarcísio'],
+        link1Rx: '9840.4',
+        link1Tx: '4920.0',
+        coreTraffic: '10480.0',
+        link2Rx: '65.3',
+        link2Tx: '41.2',
+        mttr: '14.2 seg',
+        damageAvoided: 'R$ 185.000,00',
+        attackLogs: [
+          { text: 'INCIDENTE DETECTADO: Tráfego na WAN02-RIMA excedeu 9.5 Gbps (Capacidade máx: 10G)', type: 'danger' },
+          { text: 'FortiGate Core IPS: Disparo de 4.8M PPS (TCP SYN Flood) na porta 443/500', type: 'danger' },
+          { text: 'Queda em cascata de 6 túneis IPsec no Concentrador UPA Norte por bufferbloat', type: 'danger' },
+          { text: 'Zabbix Trigger: DISASTER - IPsec Tunnel Down em 6 Unidades Escolares', type: 'danger' }
+        ],
+        soarSteps: [
+          { text: '[1/4] Ativação de SYN Cookies via acelerador Fortinet CP9: Bloqueando 4.2M PPS de tráfego sujo', delay: 700 },
+          { text: '[2/4] Rota BGP Flowspec injetada no RTR-PE-CABPI-01: Desvio de tráfego volumétrico para o Scrubbing Center', delay: 1500 },
+          { text: '[3/4] Redirecionamento dinâmico de tráfego crítico das escolas para o LINK 2: WAN01-BKT', delay: 2300 },
+          { text: '[4/4] Forçando re-keying acelerado IKEv2 Phase 2 em todos os 6 firewalls FortiGate CPE...', delay: 3100 }
+        ],
+        reportSummary: 'Na data presente, os sistemas perimetrais de cibersegurança da Prefeitura registraram um ataque volumétrico maciço do tipo DDoS SYN Flood de 9.8 Gbps direcionado à interface WAN02-RIMA e ao Concentrador UPA Norte. O motor de inteligência autônoma SOAR ativou aceleração por hardware nos firewalls FortiGate e propagou regras BGP Flowspec, neutralizando a saturação em 14.2 segundos com zero vazamentos e preservando 100% da integridade da rede municipal.',
+        timelineRows: [
+          { phase: 'Detecção', time: 'T+0.2s', action: 'Gatilho de anomalia Zabbix & FortiGate IPS (Taxa de pacotes > 4.8M PPS)', res: 'Alerta Nível 1' },
+          { phase: 'Contenção', time: 'T+2.1s', action: 'Injeção de BGP Flowspec Community 65000:666 para descarte na borda da operadora', res: 'Tráfego descartado' },
+          { phase: 'Failover', time: 'T+5.3s', action: 'Comutação de rotas prioritárias de 6 escolas para WAN01-BKT (Backup)', res: 'Rotas ativas' },
+          { phase: 'Restauração', time: 'T+14.2s', action: 'Rekeying automático IKEv2 e normalização de telemetria (RTT 1.8ms)', res: '100% Operacional' }
+        ]
+      },
+      ransomware: {
+        id: 'ransomware',
+        name: 'Tentativa de Ransomware & Movimentação Lateral SMB/RDP',
+        targetInfo: 'CONCENTRADORES SMTT & SEPLOG',
+        targetSub: 'Vetor: Varredura de portas SMB 445 e RDP 3389 com tentativa de exploit',
+        focusRegion: 'smtt',
+        targetSchools: ['EMEF Nunes Mendonça', 'EMEF Aloísio Marques', 'EMEF Pres. Juscelino Kubitschek', 'EMEF Manoel Bonfim', 'EMEF Tancredo Neves'],
+        link1Rx: '1240.0',
+        link1Tx: '890.0',
+        coreTraffic: '2130.0',
+        link2Rx: '180.5',
+        link2Tx: '95.0',
+        mttr: '13.8 seg',
+        damageAvoided: 'R$ 240.000,00',
+        attackLogs: [
+          { text: 'SOC ALERTA: Tentativa de exploração de vulnerabilidade SMBv1/v2 em CPEs da SMTT', type: 'danger' },
+          { text: 'FortiGate IPS: 320 tentativas de autenticação suspeita RDP (Porta 3389) em 30 segundos', type: 'danger' },
+          { text: 'Isolamento preventivo de microsegmentação acionado para 5 escolas de SMTT e SEPLOG', type: 'danger' },
+          { text: 'Zabbix Trigger: HIGH - Anomalia de Tráfego Interno e Violação de Política de Segurança', type: 'danger' }
+        ],
+        soarSteps: [
+          { text: '[1/4] Ativação de Microsegmentação FortiGate: Bloqueio estrito de broadcast e portas 445/3389 entre VLANs', delay: 700 },
+          { text: '[2/4] Quarentena automática de porta nos FortiSwitches locais (FortiLink NAC Policy)', delay: 1500 },
+          { text: '[3/4] Criptografia de túnel forçada para AES-256-GCM com validação de certificados digitais', delay: 2300 },
+          { text: '[4/4] Execução de vacina EDR e liberação segura dos perímetros escolares', delay: 3100 }
+        ],
+        reportSummary: 'Foi detectada e prontamente contida uma tentativa sofisticada de movimentação lateral de malware/ransomware buscando explorar portas SMB e RDP nas subredes dos concentradores SMTT e SEPLOG. O SOAR isolou preventivamente as VLANs afetadas via FortiGate Microsegmentação e aplicou quarentena NAC nos switches locais em 13.8 segundos. NENHUM arquivo foi criptografado e NENHUM dado de alunos ou servidores foi comprometido.',
+        timelineRows: [
+          { phase: 'Identificação', time: 'T+0.3s', action: 'Detecção de varredura de portas SMB (445) e RDP (3389) no firewall perimetral', res: 'Ameaça isolada' },
+          { phase: 'Quarentena', time: 'T+1.8s', action: 'Microsegmentação automática de VLANs escolares impedindo propagação', res: 'Contenção 100%' },
+          { phase: 'Vacinação', time: 'T+6.2s', action: 'Aplicação de assinaturas antivírus FortiGuard em tempo real em todos os CPEs', res: 'Assinaturas OK' },
+          { phase: 'Restauração', time: 'T+13.8s', action: 'Liberação de conectividade com integridade de dados e conformidade LGPD', res: 'Zero vazamentos' }
+        ]
+      },
+      bgp_hijack: {
+        id: 'bgp_hijack',
+        name: 'BGP Route Hijacking / Desvio Malicioso de Tráfego',
+        targetInfo: 'RTR-PE-CABPI-01 & MALHA GPON',
+        targetSub: 'Vetor: Rota ilegítima forjada por AS65530 externo tentando desviar tráfego Core',
+        focusRegion: 'core',
+        targetSchools: ['EMEF Benjamim Alves', 'EMEF CCFT/ICA', 'EMEF Quintina Diniz', 'EMEF Letícia Loli', 'EMEF Thétis Nunes'],
+        link1Rx: '320.0',
+        link1Tx: '120.0',
+        coreTraffic: '440.0',
+        link2Rx: '950.0',
+        link2Tx: '580.0',
+        mttr: '14.5 seg',
+        damageAvoided: 'R$ 160.000,00',
+        attackLogs: [
+          { text: 'ALERTA BGP: Anúncio de prefixo municipal 10.94.0.0/16 por Sistema Autônomo não autorizado', type: 'danger' },
+          { text: 'Desvio de rota externa detectado: RTT disparou de 1.8ms para 310ms (Man-in-the-Middle)', type: 'danger' },
+          { text: 'Instabilidade de túneis VPN por perda de convergência na malha metropolitana', type: 'danger' },
+          { text: 'Zabbix Trigger: DISASTER - BGP Peer State Changed & Route Flapping', type: 'danger' }
+        ],
+        soarSteps: [
+          { text: '[1/4] Validação RPKI (ROA) ativada: Rejeição imediata de anúncios de rota sem assinatura criptográfica', delay: 700 },
+          { text: '[2/4] Purga das tabelas FIB/RIB do RTR-PE-CABPI-01: Expurgo da rota maliciosa do AS65530', delay: 1500 },
+          { text: '[3/4] Reancoragem BGP via peering seguro no PTT/IX.br com aplicação de BGP Community protegida', delay: 2300 },
+          { text: '[4/4] Convergência de rota legítima restabelecida e latência normalizada para 1.8 ms', delay: 3100 }
+        ],
+        reportSummary: 'Identificou-se um anúncio de prefixo de rede não autorizado (BGP Hijacking) na internet pública com intenção de desviar tráfego metropolitano do Core da Prefeitura. A governança do SOAR ativou validação criptográfica RPKI e descartou as rotas não autenticadas no roteador RTR-PE-CABPI-01. O tráfego foi reancorado via rota de alta confiabilidade em 14.5 segundos, frustrando integralmente a tentativa de interceptação.',
+        timelineRows: [
+          { phase: 'Detecção', time: 'T+0.4s', action: 'Telemetria de latência Zabbix aponta salto anômalo de 1.8ms para 310ms', res: 'Alerta Rota BGP' },
+          { phase: 'Filtragem', time: 'T+2.0s', action: 'Validação RPKI (Route Origin Authorization) descartando rota fraudulenta', res: 'Prefixo Rejeitado' },
+          { phase: 'Reancoragem', time: 'T+5.5s', action: 'Reinjeção de rota legítima com BGP community protegida via link seguro', res: 'Rota Convergida' },
+          { phase: 'Finalização', time: 'T+14.5s', action: 'Convergência metropolitana concluída com RTT estável em 1.8ms', res: 'Tráfego Seguro' }
+        ]
+      },
+      blackout: {
+        id: 'blackout',
+        name: 'Ataque Combinado Multi-Vetor / Blackout Cibernético',
+        targetInfo: 'CORE SEDE & 4 CONCENTRADORES',
+        targetSub: 'Vetor: Ataque coordenado distribuído atingindo Core, Firewalls e VPNs simultaneamente',
+        focusRegion: 'core',
+        targetSchools: [
+          'EMEF Orlando Santos', 'EMEF CAIC', 'EMEF Horácio Fontes',
+          'EMEF Nunes Mendonça', 'EMEF Benjamim Alves',
+          'EMEF Manoel Bonfim', 'EMEF Tancredo Neves', 'EMEF Ágape',
+          'EMEF Rachel Cortes Sul', 'EMEF Carvalho Neto II', 'EMEF Papa João Paulo II'
+        ],
+        link1Rx: '9920.0',
+        link1Tx: '5100.0',
+        coreTraffic: '11200.0',
+        link2Rx: '980.0',
+        link2Tx: '520.0',
+        mttr: '15.1 seg',
+        damageAvoided: 'R$ 320.000,00',
+        attackLogs: [
+          { text: '🚨 CRITICAL MULTI-VECTOR ATTACK: Ataque coordenado em larga escala contra toda a malha', type: 'danger' },
+          { text: 'Ambos os links de borda (WAN02-RIMA e WAN01-BKT) com volumetria crítica superior a 95%', type: 'danger' },
+          { text: '11 Unidades Escolares com queda simultânea de túnel IPsec em 4 regiões', type: 'danger' },
+          { text: 'Zabbix Trigger: MULTIPLE DISASTERS - Ataque cibernético simultâneo em larga escala', type: 'danger' }
+        ],
+        soarSteps: [
+          { text: '[1/4] Ativação do Modo de Defesa Total Fortinet Security Fabric em todos os firewalls', delay: 700 },
+          { text: '[2/4] Descarte perimetral coordenado de tráfego sujo por listas de reputação IP FortiGuard', delay: 1500 },
+          { text: '[3/4] Rebalanceamento inteligente via SD-WAN com priorização absoluta de tráfego escolar', delay: 2300 },
+          { text: '[4/4] Restauração paralela em lote de todas as 94 escolas municipais com túneis redundantes', delay: 3100 }
+        ],
+        reportSummary: 'A infraestrutura municipal foi alvo de um ataque massivo e coordenado em múltiplos vetores, combinando saturação volumétrica de borda com tempestades de pacotes direcionadas aos 4 concentradores regionais. O playbook de emergência do SOAR assumiu o gerenciamento integrado de toda a malha metropolitana, aplicando contenção simultânea nos firewalls e restabelecendo 100% dos serviços em 15.1 segundos com resiliência máxima.',
+        timelineRows: [
+          { phase: 'Alerta Global', time: 'T+0.2s', action: 'Disparo de alarmes de saturação e queda em múltiplos concentradores', res: 'Estado de Defesa' },
+          { phase: 'Contenção Global', time: 'T+2.5s', action: 'Ativação do Fortinet Security Fabric e filtragem perimetral coordenada', res: 'Tráfego retido' },
+          { phase: 'SD-WAN', time: 'T+6.0s', action: 'Orquestração de contingência com priorização de tráfego pedagógico e administrativo', res: 'Canais seguros' },
+          { phase: 'Restabelecimento', time: 'T+15.1s', action: 'Conexão plena de 94 escolas restabelecida sem perda de dados ou registros', res: '100% Normalizado' }
+        ]
+      }
+    };
 
     function clearAllSimulationTimers() {
       activeSimulationTimers.forEach(t => clearTimeout(t));
@@ -1597,50 +1904,49 @@
       isMitigating = false;
       restoreButtonLabels();
 
+      const selectEl = document.getElementById('selectAttackVector');
+      if (selectEl) currentScenarioKey = selectEl.value;
+      const scenario = ATTACK_SCENARIOS[currentScenarioKey] || ATTACK_SCENARIOS.ddos_syn;
+
       SoundFX.playAlert();
 
-      // 1. Update Telemetry to Saturated Attack State (9.8 Gbps)
-      document.getElementById('link1Rx').textContent = '9840.4';
-      document.getElementById('link1Tx').textContent = '4920.0';
-      document.getElementById('kpiCoreTraffic').textContent = '10480.0';
+      // 1. Update Telemetry
+      document.getElementById('link1Rx').textContent = scenario.link1Rx;
+      document.getElementById('link1Tx').textContent = scenario.link1Tx;
+      document.getElementById('kpiCoreTraffic').textContent = scenario.coreTraffic;
+      document.getElementById('link2Rx').textContent = scenario.link2Rx;
+      document.getElementById('link2Tx').textContent = scenario.link2Tx;
       
-      // Update link labels in DOM to show extreme stress
       const link1Card = document.getElementById('link1Rx').closest('.bg-\\[\\#0b1626\\]');
       if (link1Card) link1Card.classList.add('border-rose-500', 'bg-rose-950/20');
 
-      // 2. Drop 6 target schools in UPA Norte to Offline
+      // 2. Drop Target Schools
       schools.forEach(s => {
-        if (TARGET_ATTACKED_SCHOOLS.includes(s.name)) {
+        if (scenario.targetSchools.includes(s.name)) {
           s.status = 'offline';
-          s.latency = 284.5;
-          s.loss = 44.8;
+          s.latency = +(180.0 + Math.random() * 120).toFixed(1);
+          s.loss = +(35.0 + Math.random() * 25).toFixed(1);
         }
       });
 
       updateOverallMetrics();
-
-      // Focus topology on UPA Norte to emphasize affected nodes on video
-      focusRegion('norte');
+      focusRegion(scenario.focusRegion);
 
       // 3. Update HUD & Statuses
       const hudBadge = document.getElementById('hudBadgeStatus');
       if (hudBadge) {
-        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-500 animate-pulse';
-        hudBadge.textContent = '🚨 EM ATAQUE: DDoS 9.8 Gbps';
+        hudBadge.className = 'text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-rose-950 text-rose-400 border border-rose-500 animate-pulse';
+        hudBadge.textContent = '🚨 EM ATAQUE';
       }
 
-      document.getElementById('incidentTargetInfo').innerHTML = '<span class="text-rose-400 font-bold">WAN02-RIMA & UPA NORTE</span>';
-      document.getElementById('incidentTargetSub').textContent = 'Vetor: TCP SYN Flood massivo originado de 14.800 IPs';
+      document.getElementById('incidentTargetInfo').innerHTML = `<span class="text-rose-400 font-bold">${scenario.targetInfo}</span>`;
+      document.getElementById('incidentTargetSub').textContent = scenario.targetSub;
       document.getElementById('soarResponseTime').textContent = 'Detectando...';
-      document.getElementById('soarEfficacy').textContent = '0%';
 
-      document.getElementById('headerStatusText').innerHTML = '<span class="text-rose-400 font-bold animate-pulse">🚨 ALERTA CRÍTICO: ATAQUE DDOS EM ANDAMENTO NA WAN02-RIMA (9.8 Gbps) • 6 TÚNEIS IPSEC DOWN</span>';
+      document.getElementById('headerStatusText').innerHTML = `<span class="text-rose-400 font-bold animate-pulse">🚨 ALERTA CRÍTICO: ${scenario.name.toUpperCase()} • ${scenario.targetSchools.length} TÚNEIS IPSEC DOWN</span>`;
 
-      // 4. Detailed Terminal Incident Logs
-      appendSocLog('INCIDENTE DETECTADO: Tráfego na WAN02-RIMA excedeu 9.5 Gbps (Capacidade máx: 10G)', 'danger');
-      appendSocLog('FortiGate Core IPS: Disparo de 4.8M PPS (TCP SYN Flood) na porta 443/500', 'danger');
-      appendSocLog('Queda em cascata de 6 túneis IPsec no Concentrador UPA Norte por bufferbloat', 'danger');
-      appendSocLog('Zabbix Trigger: DISASTER - IPsec Tunnel Down em 6 Unidades Escolares', 'danger');
+      // 4. Detailed Terminal Logs
+      scenario.attackLogs.forEach(log => appendSocLog(log.text, log.type));
     }
 
     function triggerSoarMitigation() {
@@ -1648,51 +1954,41 @@
       isMitigating = true;
       restoreButtonLabels();
 
+      const scenario = ATTACK_SCENARIOS[currentScenarioKey] || ATTACK_SCENARIOS.ddos_syn;
+
       const hudBadge = document.getElementById('hudBadgeStatus');
       if (hudBadge) {
-        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500 animate-pulse';
-        hudBadge.textContent = '🤖 SOAR: PLAYBOOK EM EXECUÇÃO';
+        hudBadge.className = 'text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-500 animate-pulse';
+        hudBadge.textContent = '🤖 SOAR MITIGANDO';
       }
 
-      appendSocLog('INICIANDO PLAYBOOK SOAR AUTOMATIZADO: Defesa Cibernética & Restabelecimento de VPN', 'action');
+      appendSocLog(`INICIANDO PLAYBOOK SOAR AUTOMATIZADO PARA: ${scenario.name}`, 'action');
 
-      // Step 1: SYN Cookies & IPS Hardware Drop
-      addSimulationTimer(() => {
-        appendSocLog('[1/4] Ativação de SYN Cookies via acelerador Fortinet CP9: Bloqueando 4.2M PPS de tráfego sujo', 'action');
-      }, 700);
+      // Execute scenario steps
+      scenario.soarSteps.forEach(step => {
+        addSimulationTimer(() => {
+          appendSocLog(step.text, 'action');
+        }, step.delay);
+      });
 
-      // Step 2: BGP Flowspec Scrubbing
+      // Recover schools gradually
       addSimulationTimer(() => {
-        appendSocLog('[2/4] Rota BGP Flowspec injetada no RTR-PE-CABPI-01: Desvio de tráfego volumétrico para o Scrubbing Center', 'action');
-      }, 1500);
-
-      // Step 3: Redundant Link Failover
-      addSimulationTimer(() => {
-        appendSocLog('[3/4] Redirecionamento dinâmico de tráfego crítico das escolas para o LINK 2: WAN01-BKT', 'action');
-        document.getElementById('link2Rx').textContent = '420.5';
-        document.getElementById('link2Tx').textContent = '190.2';
-      }, 2300);
-
-      // Step 4: IPsec Rekeying & Restoration
-      addSimulationTimer(() => {
-        appendSocLog('[4/4] Forçando re-keying acelerado IKEv2 Phase 2 em todos os 6 firewalls FortiGate CPE...', 'action');
-        
         let delay = 0;
-        TARGET_ATTACKED_SCHOOLS.forEach((name) => {
+        scenario.targetSchools.forEach((name) => {
           addSimulationTimer(() => {
             const sc = schools.find(item => item.name === name);
             if (sc) {
               sc.status = 'online';
-              sc.latency = +(2.8 + Math.random() * 2).toFixed(1);
+              sc.latency = +(2.5 + Math.random() * 2).toFixed(1);
               sc.loss = 0.0;
               updateOverallMetrics();
             }
           }, delay);
-          delay += 250;
+          delay += 200;
         });
-      }, 3100);
+      }, 2800);
 
-      // Step 5: Complete Neutralization
+      // Final complete neutralization
       addSimulationTimer(() => {
         isAttackActive = false;
         isMitigating = false;
@@ -1712,27 +2008,55 @@
         focusRegion('core');
 
         if (hudBadge) {
-          hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
-          hudBadge.textContent = '🛡️ RESOLVIDO: 100% ONLINE';
+          hudBadge.className = 'text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
+          hudBadge.textContent = '🛡️ RESOLVIDO';
         }
 
         document.getElementById('incidentTargetInfo').innerHTML = '<span class="text-emerald-400 font-bold">Ataque Neutralizado</span>';
         document.getElementById('incidentTargetSub').textContent = 'Tráfego legítimo normalizado em 100% das 94 unidades';
-        document.getElementById('soarResponseTime').textContent = '14.2s (Zero Downtime Crítico)';
-        document.getElementById('soarEfficacy').textContent = '100% Eficaz';
+        document.getElementById('soarResponseTime').textContent = scenario.mttr;
 
         document.getElementById('headerStatusText').innerHTML = '<span class="text-emerald-400 font-medium">✓ Links Core OK • 94/94 Escolas 100% Online (Ataque Mitigado com Sucesso)</span>';
 
-        appendSocLog('INCIDENTE NEUTRALIZADO EM 14.2 SEGUNDOS: 0% de interrupção permanente nos serviços da prefeitura.', 'success');
-        appendSocLog('Relatório de Incidente (RCA) exportado automaticamente para o Zabbix e SIEM.', 'success');
+        appendSocLog(`INCIDENTE NEUTRALIZADO EM ${scenario.mttr}: 0% de interrupção permanente nos serviços da prefeitura.`, 'success');
+        appendSocLog('Gerando Relatório Técnico Executivo para a Alta Gestão...', 'success');
+
+        // Populate and open Executive Report automatically!
+        generateAndOpenExecutiveReport(scenario);
+
       }, 4800);
+    }
+
+    function generateAndOpenExecutiveReport(scenario) {
+      if (!scenario) scenario = ATTACK_SCENARIOS[currentScenarioKey] || ATTACK_SCENARIOS.ddos_syn;
+
+      const randomTicket = `INC-2026-CABPI-${Math.floor(1000 + Math.random() * 9000)}`;
+      const nowStr = new Date().toLocaleString('pt-BR');
+
+      document.getElementById('repTicketId').textContent = randomTicket;
+      document.getElementById('repTimestamp').textContent = nowStr;
+      document.getElementById('repMttrTime').textContent = scenario.mttr;
+      document.getElementById('repExecutiveSummary').textContent = scenario.reportSummary;
+
+      // Populate Timeline rows
+      const tbody = document.getElementById('repTimelineBody');
+      tbody.innerHTML = scenario.timelineRows.map(row => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-2 font-bold text-slate-800">${row.phase}</td>
+          <td class="p-2 text-indigo-700 font-semibold">${row.time}</td>
+          <td class="p-2 text-slate-700">${row.action}</td>
+          <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">${row.res}</span></td>
+        </tr>
+      `).join('');
+
+      // Open Modal
+      document.getElementById('executiveReportModal').classList.remove('hidden');
     }
 
     function runFullAutoDemo() {
       clearAllSimulationTimers();
       const btn = document.getElementById('btnAutoDemoMode');
 
-      // 1. Reset first to clean state
       resetSimulation(false);
 
       if (btn) btn.innerHTML = '⏳ Ataque em 2s...';
@@ -1789,25 +2113,46 @@
 
       const hudBadge = document.getElementById('hudBadgeStatus');
       if (hudBadge) {
-        hudBadge.className = 'text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
-        hudBadge.textContent = 'SISTEMA NORMAL';
+        hudBadge.className = 'text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50';
+        hudBadge.textContent = 'NORMAL';
       }
 
       document.getElementById('incidentTargetInfo').textContent = 'Nenhum';
       document.getElementById('incidentTargetSub').textContent = 'Malha metropolitana operando em 100%';
       document.getElementById('soarResponseTime').textContent = '0.0s';
-      document.getElementById('soarEfficacy').textContent = '100%';
 
       document.getElementById('headerStatusText').textContent = 'Links Core OK (RIMA 881M + BKT 65M) • 94/94 Escolas Online';
 
       appendSocLog('Rede resetada para operação padrão. 94/94 Escolas online.', 'info');
     }
 
-    // Attach HUD Listeners
+    // Attach Listeners
     document.getElementById('btnTriggerAttack').addEventListener('click', triggerCyberAttack);
     document.getElementById('btnTriggerMitigation').addEventListener('click', triggerSoarMitigation);
     document.getElementById('btnAutoDemoMode').addEventListener('click', runFullAutoDemo);
     document.getElementById('btnResetSimulation').addEventListener('click', resetSimulation);
+
+    document.getElementById('selectAttackVector').addEventListener('change', (e) => {
+      currentScenarioKey = e.target.value;
+      const sc = ATTACK_SCENARIOS[currentScenarioKey];
+      if (sc) {
+        appendSocLog(`Vetor selecionado: ${sc.name}`, 'info');
+        document.getElementById('incidentTargetInfo').textContent = sc.targetInfo;
+        document.getElementById('incidentTargetSub').textContent = sc.targetSub;
+      }
+    });
+
+    document.getElementById('btnOpenReportModal').addEventListener('click', () => {
+      generateAndOpenExecutiveReport();
+    });
+
+    document.getElementById('btnCloseReportModal').addEventListener('click', () => {
+      document.getElementById('executiveReportModal').classList.add('hidden');
+    });
+
+    document.getElementById('btnPrintReport').addEventListener('click', () => {
+      window.print();
+    });
 
     document.getElementById('btnOpenCyberHud').addEventListener('click', () => {
       const hud = document.getElementById('cyberAttackHud');
