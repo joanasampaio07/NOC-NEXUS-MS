@@ -1,0 +1,17 @@
+# Variáveis de ambiente e tokens sensíveis
+.env
+*.env.local
+*.token
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+venv/
+.venv/
+
+# Logs e arquivos do sistema
+*.log
+.DS_Store
+Thumbs.db

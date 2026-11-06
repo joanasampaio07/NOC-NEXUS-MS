@@ -1,0 +1,526 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Dashboard Operacional NOC CAB/PI (Cabeceiras do Piauí) - Monitoramento em Tempo Real integrado com Zabbix 6.x/7.x e Fortinet IPsec",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 100,
+      "title": "INDICADORES CRÍTICOS DE REDE & LINKS DE BORDA (NOC CAB/PI)",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 90
+              },
+              {
+                "color": "#00ffaa",
+                "value": 94
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 36
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "zabbix"
+          },
+          "group": {
+            "filter": "CAB/PI / ESCOLAS"
+          },
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "icmpping"
+          },
+          "refId": "A",
+          "resultFormat": "table"
+        }
+      ],
+      "title": "ESCOLAS ONLINE",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 90
+              },
+              {
+                "color": "#00e6ff",
+                "value": 94
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 36
+        },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "zabbix"
+          },
+          "group": {
+            "filter": "CAB/PI / ESCOLAS"
+          },
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "fortinet.ipsec.tunnel.status[*]"
+          },
+          "refId": "A",
+          "resultFormat": "table"
+        }
+      ],
+      "title": "TÚNEIS VPN IPSEC",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 25,
+            "lineWidth": 2
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 8,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "group": {
+            "filter": "CAB/PI / CORE"
+          },
+          "host": {
+            "filter": "RTR-PE-CABPI-01"
+          },
+          "item": {
+            "filter": "net.if.in[ifHCInOctets.WAN02-RIMA]"
+          },
+          "refId": "Download"
+        },
+        {
+          "group": {
+            "filter": "CAB/PI / CORE"
+          },
+          "host": {
+            "filter": "RTR-PE-CABPI-01"
+          },
+          "item": {
+            "filter": "net.if.out[ifHCOutOctets.WAN02-RIMA]"
+          },
+          "refId": "Upload"
+        }
+      ],
+      "title": "LINK 1: WAN02-RIMA (10G)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 13,
+        "y": 1
+      },
+      "id": 4,
+      "targets": [
+        {
+          "group": {
+            "filter": "CAB/PI / CORE"
+          },
+          "host": {
+            "filter": "RTR-PE-CABPI-01"
+          },
+          "item": {
+            "filter": "net.if.in[ifHCInOctets.WAN01-BKT]"
+          },
+          "refId": "Download"
+        },
+        {
+          "group": {
+            "filter": "CAB/PI / CORE"
+          },
+          "host": {
+            "filter": "RTR-PE-CABPI-01"
+          },
+          "item": {
+            "filter": "net.if.out[ifHCOutOctets.WAN01-BKT]"
+          },
+          "refId": "Upload"
+        }
+      ],
+      "title": "LINK 2: WAN01-BKT (PORT1)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#00e6ff",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 4000000000
+              },
+              {
+                "color": "red",
+                "value": 8500000000
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "targets": [
+        {
+          "group": {
+            "filter": "CAB/PI / CORE"
+          },
+          "host": {
+            "filter": "SW-L3-COR-CABPI"
+          },
+          "item": {
+            "filter": "net.if.in[ifHCInOctets.Aggregate-WAN]"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "TRÁFEGO WAN CORE SEDE",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 101,
+      "title": "TOPOLOGIA RADIAL EM TEMPO REAL (CORE & CONCENTRADORES)",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 6,
+      "title": "Topologia Radial: Core CAB/PI • Concentradores (UPA Norte, Sul, SEPLOG, SMTT) & 94 Escolas",
+      "type": "volkovlabs-echarts-panel",
+      "options": {
+        "getOption": "// Código Apache ECharts Radial Tree integrado ao Zabbix\nconst data = {\n  name: 'CORE CAB/PI\\nSEDE BDR',\n  itemStyle: { color: '#00e6ff' },\n  children: [\n    {\n      name: 'UPA NORTE (14/14)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Orlando Santos' }, { name: 'Horácio Fontes' }, { name: 'Vicente Olívio' },\n        { name: 'Elaine Avelino' }, { name: 'CAIC' }, { name: 'Maria da Glória' },\n        { name: 'Dom Tarcísio' }, { name: 'Sta Rita' }, { name: 'José Conrado' },\n        { name: 'Augusto Severino' }, { name: 'Mirocles Ramos' }, { name: 'Mons. Aniceto' },\n        { name: 'Prof. Zuleida' }, { name: 'Maria Silveira' }\n      ]\n    },\n    {\n      name: 'SMTT (11/11)',\n      itemStyle: { color: '#00e6ff' },\n      children: [\n        { name: 'Nunes Mendonça' }, { name: 'Aloísio Marques' }, { name: 'Pres. JK' },\n        { name: 'Benjamim Alves' }, { name: 'CCFT/ICA' }, { name: 'José Airton' },\n        { name: 'José Resende' }, { name: 'Min. Mário' }, { name: 'Alm. Tamandaré' },\n        { name: 'Prof. João Oliveira' }, { name: 'Almerinda Neri' }\n      ]\n    },\n    {\n      name: 'SEPLOG (19/19)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Manoel Bonfim' }, { name: 'Tancredo Neves' }, { name: 'Quintina Diniz' },\n        { name: 'Letícia Loli' }, { name: 'Thétis Nunes' }, { name: 'Ágape' },\n        { name: 'Sta Rita' }, { name: 'Dr. Fernando Bua' }, { name: 'Costa Melo' },\n        { name: 'João Teles' }, { name: 'Carvalho Neto' }, { name: 'Ana Luiza Mesquita' }\n      ]\n    },\n    {\n      name: 'UPA SUL (50/50)',\n      itemStyle: { color: '#00ffaa' },\n      children: [\n        { name: 'Rachel Cortes' }, { name: 'Carvalho Neto' }, { name: 'Papa João Paulo' },\n        { name: 'Dom José' }, { name: 'Valter Cardoso' }, { name: 'Laonte Gama' },\n        { name: 'Arício Fortes' }, { name: 'José Carlos' }, { name: 'Arthur Bispo' },\n        { name: 'Ângelo Mota' }, { name: 'Minervina Marçal' }, { name: 'Janira Ferraz' }\n      ]\n    }\n  ]\n};\n\nreturn {\n  tooltip: { trigger: 'item', triggerOn: 'mousemove' },\n  series: [\n    {\n      type: 'tree',\n      data: [data],\n      layout: 'radial',\n      symbol: 'circle',\n      symbolSize: 12,\n      initialTreeDepth: 2,\n      animationDurationUpdate: 750,\n      emphasis: { focus: 'descendant' }\n    }\n  ]\n};"
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 102,
+      "title": "CENTRAL DE INCIDENTES & STATUS OPERACIONAL REGIONAL",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 14,
+        "x": 0,
+        "y": 23
+      },
+      "id": 7,
+      "options": {
+        "layout": "table",
+        "problemFilter": "",
+        "showTags": true,
+        "sortProblems": "priority"
+      },
+      "title": "ALERTAS DE NÍVEL ALTO (VPN / FORTIGATE / SWITCH / FORTIAP)",
+      "type": "alexanderzobnin-zabbix-problems-panel"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "zabbix"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 14,
+        "y": 23
+      },
+      "id": 8,
+      "options": {
+        "footer": {
+          "show": false
+        }
+      },
+      "title": "CONCENTRADORES REGIONAIS",
+      "type": "table"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "NOC",
+    "CABPI",
+    "Cabeceiras",
+    "Zabbix",
+    "Fortinet",
+    "IPsec",
+    "Redes"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "Todos",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "alexanderzobnin-zabbix-datasource",
+          "uid": "zabbix"
+        },
+        "definition": "*",
+        "includeAll": true,
+        "label": "Concentrador",
+        "multi": false,
+        "name": "concentrador",
+        "options": [],
+        "query": "CAB/PI / ESCOLAS",
+        "refresh": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m"
+    ]
+  },
+  "timezone": "America/Fortaleza",
+  "title": "NOC CAB/PI - Topologia & Telemetria em Tempo Real (Cabeceiras do Piauí)",
+  "uid": "cabpi-noc-live",
+  "version": 1
+}
+
