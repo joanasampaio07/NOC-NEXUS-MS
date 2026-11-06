@@ -255,102 +255,88 @@
     <!-- Canvas for high performance radial node-link render -->
     <canvas id="topologyCanvas" class="w-full h-full block"></canvas>
 
-    <!-- CYBER ATTACK WAR ROOM & SOAR AUTONOMOUS MITIGATION HUD -->
-    <div id="cyberAttackHud" class="absolute top-3 left-1/2 -translate-x-1/2 w-[94%] max-w-5xl bg-[#091322]/95 backdrop-blur-xl border border-rose-500/70 rounded-xl shadow-[0_0_40px_rgba(255,42,95,0.45)] p-4 z-30 transition-all duration-300">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-rose-900/60 pb-2.5 mb-3">
-        <div class="flex items-center gap-2.5">
-          <div class="relative flex items-center justify-center w-7 h-7 rounded-lg bg-rose-950 border border-rose-500 text-rose-400 font-bold text-xs">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-lg bg-rose-400 opacity-50"></span>
+    <!-- CYBER ATTACK WAR ROOM & SOAR AUTONOMOUS MITIGATION HUD (COMPACT SIDE PANEL) -->
+    <div id="cyberAttackHud" class="absolute top-3 right-3 w-[340px] bg-[#091322]/95 backdrop-blur-xl border border-rose-500/80 rounded-xl shadow-[0_0_30px_rgba(255,42,95,0.35)] p-3 z-30 transition-all duration-300">
+      <!-- HUD Header -->
+      <div class="flex items-center justify-between border-b border-rose-900/60 pb-2 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="relative flex items-center justify-center w-6 h-6 rounded bg-rose-950 border border-rose-500 text-rose-400 font-bold text-[10px]">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded bg-rose-400 opacity-50"></span>
             SOC
           </div>
           <div>
-            <h2 class="text-sm font-bold text-white flex items-center gap-2">
-              <span>WAR ROOM NOC / SOC: SIMULADOR DE CYBER ATAQUE & AUTO-DEFESA SOAR</span>
-              <span id="hudBadgeStatus" class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50">SISTEMA NORMAL</span>
+            <h2 class="text-xs font-bold text-white flex items-center gap-1.5">
+              <span>WAR ROOM • SOC CAB/PI</span>
             </h2>
-            <p class="text-[12px] text-slate-400">Ambiente de demonstração profissional: Dispare o incidente volumétrico e veja a automação SOAR resolver ao vivo.</p>
+            <span id="hudBadgeStatus" class="inline-block text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50">NORMAL</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button id="btnSoundToggle" class="px-2 py-1 rounded bg-[#0d1d33] border border-slate-700 text-slate-300 hover:text-white text-xs flex items-center gap-1" title="Ligar/Desligar Áudio da Simulação">
-            🔊 Som: <strong id="soundStateText" class="text-emerald-400">ON</strong>
-          </button>
-          <button id="btnCloseHud" class="text-slate-400 hover:text-white px-2 py-1 rounded hover:bg-slate-800 text-sm font-bold" title="Fechar Painel">
-            ✕
-          </button>
+        <!-- Position & Window Controls -->
+        <div class="flex items-center gap-1">
+          <button id="btnDockLeft" class="px-1.5 py-0.5 rounded bg-[#0d1d33] hover:bg-[#163156] border border-slate-700 text-slate-300 text-[10px]" title="Mover para Esquerda">◧ Esq</button>
+          <button id="btnDockRight" class="px-1.5 py-0.5 rounded bg-[#0d1d33] hover:bg-[#163156] border border-slate-700 text-slate-300 text-[10px]" title="Mover para Direita">◨ Dir</button>
+          <button id="btnToggleMinimize" class="px-1.5 py-0.5 rounded bg-[#0d1d33] hover:bg-[#163156] border border-slate-700 text-slate-300 text-[10px]" title="Minimizar">_ Min</button>
+          <button id="btnCloseHud" class="text-slate-400 hover:text-white px-1 rounded hover:bg-slate-800 text-xs font-bold" title="Fechar">✕</button>
         </div>
       </div>
 
-      <!-- Action Control Buttons -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-3">
-        <button id="btnTriggerAttack" class="bg-gradient-to-r from-rose-700 to-red-600 hover:from-rose-600 hover:to-red-500 text-white font-bold py-2 px-3 rounded-lg text-xs shadow transition flex items-center justify-center gap-1.5 border border-rose-400/50">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-          1. Disparar Ataque DDoS (9.8G)
-        </button>
+      <!-- Collapsible Body (can be minimized) -->
+      <div id="hudBodyContent" class="space-y-2">
+        <!-- Action Control Buttons -->
+        <div class="grid grid-cols-2 gap-1.5">
+          <button id="btnTriggerAttack" class="col-span-2 bg-gradient-to-r from-rose-700 to-red-600 hover:from-rose-600 hover:to-red-500 text-white font-bold py-1.5 px-2 rounded text-[11px] shadow transition flex items-center justify-center gap-1 border border-rose-400/50">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            1. Disparar Ataque DDoS (9.8G)
+          </button>
 
-        <button id="btnTriggerMitigation" class="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-slate-950 font-black py-2 px-3 rounded-lg text-xs shadow transition flex items-center justify-center gap-1.5 border border-cyan-300">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-          2. Ativar Auto-Remediação SOAR
-        </button>
+          <button id="btnTriggerMitigation" class="col-span-2 bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-slate-950 font-black py-1.5 px-2 rounded text-[11px] shadow transition flex items-center justify-center gap-1 border border-cyan-300">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            2. Ativar Auto-Remediação SOAR
+          </button>
 
-        <button id="btnAutoDemoMode" class="bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-bold py-2 px-3 rounded-lg text-xs shadow transition flex items-center justify-center gap-1.5 border border-indigo-400/50">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          🎬 Modo Gravação LinkedIn (Auto)
-        </button>
+          <button id="btnAutoDemoMode" class="bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-bold py-1.5 px-2 rounded text-[10px] shadow transition flex items-center justify-center gap-1 border border-indigo-400/50">
+            🎬 Auto LinkedIn
+          </button>
 
-        <button id="btnResetSimulation" class="bg-[#122237] hover:bg-[#1a3353] border border-[#1d3d63] text-slate-300 font-semibold py-2 px-3 rounded-lg text-xs transition flex items-center justify-center gap-1.5">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-          Resetar Rede (Normal)
-        </button>
-      </div>
-
-      <!-- Live Terminal Log & Telemetry Monitor -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-2 text-xs font-mono">
-        <!-- Terminal Output (cols 8) -->
-        <div class="md:col-span-8 bg-[#050b14] border border-[#17304f] rounded-lg p-2.5 h-32 overflow-y-auto" id="socTerminalConsole">
-          <div class="text-cyan-400 font-bold mb-1 flex items-center justify-between border-b border-slate-800 pb-1">
-            <span>TERMINAL SOC DE DEFESA CIBERNÉTICA // FORTINET SOAR ENGINE</span>
-            <span class="text-[11px] text-slate-500">LIVE FEED</span>
-          </div>
-          <div id="socTerminalLogs" class="space-y-1 text-slate-300 text-[11px]">
-            <div class="text-slate-500">[00:00:00] Motor de mitigação autônoma em prontidão. Telemetria do Core OK.</div>
-          </div>
+          <button id="btnResetSimulation" class="bg-[#122237] hover:bg-[#1a3353] border border-[#1d3d63] text-slate-300 font-semibold py-1.5 px-2 rounded text-[10px] transition flex items-center justify-center gap-1">
+            🔄 Resetar
+          </button>
         </div>
 
-        <!-- Incident Telemetry Card (cols 4) -->
-        <div class="md:col-span-4 bg-[#0a1628] border border-[#193657] rounded-lg p-2.5 flex flex-col justify-between">
+        <!-- Telemetry Summary -->
+        <div class="bg-[#060c17] p-2 rounded border border-[#17304f] text-[11px] font-mono flex items-center justify-between">
           <div>
-            <span class="text-slate-400 uppercase text-[11px] font-bold block mb-1">Vetor do Incidente</span>
-            <div id="incidentTargetInfo" class="text-slate-200 font-bold">Nenhum ataque ativo</div>
-            <div class="text-slate-400 text-[11px] mt-0.5" id="incidentTargetSub">Malha metropolitana operando em 100%</div>
+            <span class="text-slate-400 block text-[10px]">ALVO DO ATAQUE</span>
+            <span id="incidentTargetInfo" class="text-slate-200 font-bold">Nenhum</span>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 space-y-1 text-[11px]">
-            <div class="flex justify-between">
-              <span class="text-slate-400">Tempo de Resposta SOAR:</span>
-              <span id="soarResponseTime" class="text-emerald-400 font-bold">0.0s</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-slate-400">Eficácia da Mitigação:</span>
-              <span id="soarEfficacy" class="text-cyan-400 font-bold">100%</span>
-            </div>
+          <div class="text-right">
+            <span class="text-slate-400 block text-[10px]">RESPOSTA SOAR</span>
+            <span id="soarResponseTime" class="text-emerald-400 font-bold">0.0s</span>
           </div>
         </div>
-      </div>
 
-      <!-- LinkedIn Video Script Accordion / Collapsible -->
-      <div class="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between">
-        <details class="w-full text-[11px]">
-          <summary class="cursor-pointer text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1.5 select-none">
-            <span>🎙️ Roteiro Narrativo Sugerido para você falar no Vídeo do LinkedIn</span>
-            <span class="text-slate-500 text-[10px]">(Clique para ver o texto)</span>
-          </summary>
-          <div class="mt-2 bg-[#050b14] p-3 rounded border border-cyan-900/40 text-slate-200 space-y-1.5 leading-relaxed font-sans">
-            <p><strong>Fala 1 (Introdução):</strong> <em>"Fala pessoal! Hoje quero demonstrar o nosso novo dashboard de NOC em tempo real da Prefeitura de Cabeceiras do Piauí monitorando 94 unidades escolares..."</em></p>
-            <p><strong>Fala 2 (Disparo do Ataque):</strong> <em>"Vou disparar agora uma simulação de ataque volumétrico DDoS de 9.8 Gbps atingindo nosso link principal WAN02-RIMA e o concentrador UPA Norte. Vejam que instantaneamente a latência explode, a perda de pacotes sobe para mais de 40% e 6 túneis IPsec caem..."</em></p>
-            <p><strong>Fala 3 (Auto-Mitigação SOAR):</strong> <em>"Aqui entra a grande inovação: o nosso motor de auto-remediação SOAR entra em ação imediatamente! Ele aciona SYN Cookies por hardware no FortiGate, propaga BGP Flowspec para descarte na borda, redireciona o tráfego das escolas para o link de backup BKT e restabelece as 94 escolas em menos de 15 segundos sem interrupção permanente!"</em></p>
+        <!-- Live Terminal Log -->
+        <div class="bg-[#050b14] border border-[#17304f] rounded p-2 h-24 overflow-y-auto font-mono text-[10px]" id="socTerminalConsole">
+          <div id="socTerminalLogs" class="space-y-1 text-slate-300 leading-tight">
+            <div class="text-slate-500">[SOC] Motor em prontidão. Telemetria Core OK.</div>
           </div>
-        </details>
+        </div>
+
+        <!-- Audio & Script footer -->
+        <div class="flex items-center justify-between pt-1 border-t border-slate-800 text-[10px]">
+          <button id="btnSoundToggle" class="text-slate-400 hover:text-white flex items-center gap-1">
+            🔊 Áudio: <strong id="soundStateText" class="text-emerald-400">ON</strong>
+          </button>
+          <details class="text-[10px]">
+            <summary class="cursor-pointer text-cyan-400 hover:underline">🎙️ Roteiro</summary>
+            <div class="absolute left-0 right-0 mt-1 p-2 bg-[#050b14] border border-cyan-800 rounded text-slate-300 text-[10px] z-40 leading-normal">
+              1. Fale sobre as 94 escolas de Cabeceiras.<br>
+              2. Dispare o ataque DDoS (9.8G) e mostre a UPA Norte caindo.<br>
+              3. Mostre o SOAR mitigando automaticamente em 14s!
+            </div>
+          </details>
+        </div>
       </div>
     </div>
 
@@ -1793,6 +1779,26 @@
 
     document.getElementById('btnCloseHud').addEventListener('click', () => {
       document.getElementById('cyberAttackHud').classList.add('hidden');
+    });
+
+    document.getElementById('btnDockLeft').addEventListener('click', () => {
+      const hud = document.getElementById('cyberAttackHud');
+      hud.classList.remove('right-3');
+      hud.classList.add('left-3');
+    });
+
+    document.getElementById('btnDockRight').addEventListener('click', () => {
+      const hud = document.getElementById('cyberAttackHud');
+      hud.classList.remove('left-3');
+      hud.classList.add('right-3');
+    });
+
+    let isHudMinimized = false;
+    document.getElementById('btnToggleMinimize').addEventListener('click', () => {
+      isHudMinimized = !isHudMinimized;
+      const body = document.getElementById('hudBodyContent');
+      body.classList.toggle('hidden', isHudMinimized);
+      document.getElementById('btnToggleMinimize').textContent = isHudMinimized ? '+ Max' : '_ Min';
     });
 
     document.getElementById('btnSoundToggle').addEventListener('click', () => {
